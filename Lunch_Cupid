@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lunch Cupid - Lunch Spinner</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        /* Define custom font classes */
+        .font-pacifico { font-family: 'Pacifico', cursive; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        /* --- Spinner Styles --- */
+        /* (These are the styles from our previous spinner code) */
+        .slot-machine-container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden; /* Prevent internal scroll */
+            position: relative;
+        }
+        .reels {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+            min-height: 80px;
+            align-items: center;
+            border: 2px solid #d1d5db;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .reel {
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #374151;
+            min-height: 50px;
+            line-height: 1.35;
+            text-align: center;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .spin-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 80%;
+            max-width: 250px;
+        }
+        .spin-button:hover {
+            background-color: #4338ca;
+        }
+        .spin-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .find-button {
+            background-color: #10b981;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+            text-decoration: none;
+            width: 80%;
+            max-width: 250px;
+            box-sizing: border-box;
+            opacity: 0;
+            visibility: hidden;
+            display: inline-block;
+        }
+        .find-button.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .find-button:hover {
+            background-color: #059669;
+        }
+        .slot-machine-container h2 {
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-inter">
+
+    <!-- 1. Header Banner Section -->
+    <div class="relative w-full h-64 md:h-80 bg-black">
+        
+        <!-- 
+          IMAGE PLACEHOLDER:
+          Replace the 'src' link below with the URL for your own banner image.
+        -->
+        <img src="https://images.pexels.com/photos/12711732/pexels-photo-12711732.jpeg" 
+             onerror="this.src='https://placehold.co/1200x400/333/fff?text=Lunch+Cupid+Image'; this.style.objectFit='cover';"
+             class="w-full h-full object-cover" 
+             alt="A display counter filled with various tapas and pintxos">
+        
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        
+        <!-- Banner Text -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
+            <h1 class="font-pacifico text-5xl md:text-7xl">Lunch Cupid</h1>
+            <p class="text-lg md:text-xl mt-2">Don't know what to get? Let Lunch Cupid pick your soul food!</p>
+        </div>
+    </div>
+
+    <!-- 2. Spinner Section -->
+    <div class="w-full flex justify-center py-12 px-4">
+        
+        <!-- This is the spinner code from before -->
+        <div class="slot-machine-container">
+            <h2>Spin for Lunch!</h2>
+            <div class="reels">
+                <div class="reel" id="reel1">Ready?</div>
+            </div>
+            <div class="buttons-container">
+                <button class="spin-button" id="spinButton">Spin!</button>
+                <a href="#" class="find-button" id="findButton" target="_blank">Find Near Me</a>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- 3. JavaScript for Spinner -->
+    <script>
+        const lunchOptions = [
+             { display: "Pizza Slice", search: "Pizza" },
+            { display: "Cheeseburger", search: "Cheeseburger" },
+            { display: "Fried Chicken Sandwich", search: "Chicken Sandwich" },
+            { display: "Hot Dogs", search: "Hot Dogs" },
+            { display: "Chicken Wings", search: "Chicken Wings" },
+            { display: "Chicken Tenders & Fries", search: "Chicken Tenders" },
+            { display: "Philly Cheesesteak", search: "Philly Cheesesteak" },
+            { display: "BBQ Pulled Pork Sandwich", search: "Pulled Pork Sandwich" },
+            { display: "Meatball Sub", search: "Meatball Sub" },
+            { display: "Sloppy Joe", search: "Sloppy Joe" },
+            { display: "Avocado Toast with Fried Egg", search: "Avocado Toast" },
+            { display: "Burrito Bowl", search: "Burrito Bowl" },
+            { display: "Poke Bowl", search: "Poke Bowl" },
+            { display: "Teriyaki Chicken Bowl", search: "Teriyaki Chicken Bowl" },
+            { display: "Korean BBQ Beef Bowl (Bibimbap-style)", search: "Korean Beef Bowl" },
+            { display: "Grain Bowl (Quinoa/Farro, etc.)", search: "Grain Bowl" },
+            { display: "Mediterranean Bowl", search: "Mediterranean Bowl" },
+            { display: "Chili (Beef or Vegetarian)", search: "Chili con Carne" },
+            { display: "Macaroni & Cheese", search: "Macaroni & Cheese" },
+            { display: "Chicken & Rice Casserole", search: "Chicken Rice Casserole" },
+            { display: "Chipotle", search: "Chipotle" },
+            { display: "Cava", search: "Cava" },
+            { display: "Korean Hangover Soup and Rice", search: "Korean Hangover Soup" },
+            { display: "Soba Noodles", search: "Soba Noodles" },
+            { display: "Udon Noodles", search: "Udon Noodles" },
+            { display: "Bibimbap", search: "Bibimbap" },
+            { display: "Bulgogi", search: "Bulgogi" },
+            { display: "Tonkotsu Ramen", search: "Tonkotsu Ramen" },
+            { display: "Miso Ramen", search: "Miso Ramen" },
+            { display: "Chinese Takeout", search: "Chinese Takeout" },
+            { display: "Sushi Set (Nigiri)", search: "Sushi" },
+            { display: "California Roll (Sushi)", search: "California Roll" },
+            { display: "Spicy Tuna Roll (Sushi)", search: "Spicy Tuna Roll" },
+            { display: "Volcano Roll (Sushi)", search: "Volcano Roll" },
+            { display: "Tuna Roll (Sushi)", search: "Tuna Roll" },
+            { display: "Donkatsu", search: "Donkatsu" },
+            { display: "Chicken Katsu", search: "Chicken Katsu" },
+            { display: "Beef Fried Rice", search: "Beef Fried Rice" },
+            { display: "Shrimp Fried Rice", search: "Shrimp Fried Rice" },
+            { display: "Fried Rice", search: "Fried Rice" },
+            { display: "Lo Mein Noodles", search: "Lo Mein" },
+            { display: "Murgh (Chicken) Makhani", search: "Murgh Makhani" },
+            { display: "Chicken Tikka Masala", search: "Chicken Tikka Masala" },
+            { display: "Chana Masala (Chickpea Curry)", search: "Chana Masala" },
+            { display: "Saag Paneer", search: "Saag Paneer" },
+            { display: "Arepas", search: "Arepas" },
+            { display: "Ceviche", search: "Ceviche" },
+            { display: "Pollo a la Brasa (Peruvian Chicken)", search: "Peruvian Chicken" },
+            { display: "Tacos (Carne Asada, Al Pastor, or Fish)", search: "Tacos" },
+            { display: "Quesadilla", search: "Quesadilla" },
+            { display: "Burrito", search: "Burrito" },
+            { display: "Loaded Nachos", search: "Loaded Nachoes" },
+            { display: "Empanadas", search: "Empanadas" },
+            { display: "Gyro", search: "Gyro" },
+            { display: "Chicken Shawarma Plate", search: "Chicken Shawarma" },
+            { display: "Falafel Platter (with hummus and pita)", search: "Falafel" },
+            { display: "Biryani (Chicken or Vegetable)", search: "Biryani" },
+            { display: "Kofta Kebab", search: "Kofta Kebab" },
+            { display: "Hummus with Pita & Veggies", search: "Hummus" },
+            { display: "Chicken Parm Sandwich", search: "Chicken Parm Sandwich" },
+            { display: "Chicken Parm", search: "Chicken Parm" },
+            { display: "Linguine Alfredo", search: "Linguine Alfredo" },
+            { display: "Vodka Sauce Rigatoni", search: "Vodka Sauce Rigatoni" },
+            { display: "Tagliatelle Bolognese", search: "Tagliatelle Bolognese" },
+            { display: "Greek Salad", search: "Greek Salad" },
+            { display: "Cobb Salad", search: "Cobb Salad" },
+            { display: "Caesar Salad with Grilled Chicken", search: "Caesar Salad" },
+            { display: "Spinach Salad (Strawberries, Almonds, Goat Cheese)", search: "Spinach Salad" },
+            { display: "Quinoa Salad (Black Beans, Corn, Avocado)", search: "Quinoa Salad" },
+            { display: "Asian Chicken Salad", search: "Asian Chicken Salad" },
+            { display: "Tuna Niçoise Salad", search: "Tuna Niçoise Salad" },
+            { display: "Caprese Salad", search: "Caprese Salad" },
+            { display: "Beet and Goat Cheese Salad", search: "Beet and Goat Cheese Salad" },
+            { display: "Garden Salad with Chickpeas", search: "Garden Salad with Chickpeas" },
+            { display: "Sweetgreen", search: "Sweetgreen" },
+            { display: "Turkey Club", search: "Turkey Club" },
+            { display: "BLT Sandwich", search: "BLT Sandwich" },
+            { display: "Chicken Caesar Wrap", search: "Chicken Caesar Wrap" },
+            { display: "Tuna Salad Sandwich", search: "Tuna Salad Sandwich" },
+            { display: "Roast Beef & Swiss Sandwich", search: "Roast Beef & Swiss" },
+            { display: "Ham & Cheese Sandwich", search: "Ham & Cheese" },
+            { display: "Egg Salad Sandwich", search: "Egg Salad Sandwich" },
+            { display: "Italian Sub", search: "Italian Sub" },
+            { display: "Grilled Cheese Sandwich", search: "Grilled Cheese" },
+            { display: "Buffalo Chicken Wrap", search: "Buffalo Chicken Wrap" },
+            { display: "Subway", search: "Subway" },
+            { display: "Caprese Panini", search: "Caprese Panini" },
+            { display: "French Dip Sandwich", search: "French Dip" },
+            { display: "Reuben Sandwich", search: "Reuben" },
+            { display: "Prosciutto & Fig Panini", search: "Prosciutto & Fig Panini" },
+            { display: "Smoked Salmon Bagel", search: "Smoked Salmon Bagel" },
+            { display: "Banh Mi (Vietnamese Sandwich)", search: "Banh Mi" },
+            { display: "Chicken & Pesto Panini", search: "Chicken & Pesto Panini" },
+            { display: "Spicy Tuna Melt", search: "Spicy Tuna Melt" },
+            { display: "Falafel Wrap", search: "Falafel Wrap" },
+            { display: "California Club Sandwich", search: "California Club Sandwich" },
+            { display: "McDonald's", search: "McDonald's" },
+            { display: "Chick-fil-a", search: "Chick-fil-a" },
+            { display: "Cuban Sandwich", search: "Cuban Sandwich" },
+            { display: "Sandwich & Soup Combo", search: "Sandwich & Soup Combo" },
+            { display: "Pad Thai", search: "Pad Thai" },
+            { display: "Pho (Vietnamese Noodle Soup)", search: "Pho" }
+        ];
+
+        const reel1 = document.getElementById('reel1');
+        const spinButton = document.getElementById('spinButton');
+        const findButton = document.getElementById('findButton');
+        let spinningTimeout = null;
+        let slowdownTimeout = null;
+        let currentChoice = null;
+
+        function getRandomLunchOption() {
+            const randomIndex = Math.floor(Math.random() * lunchOptions.length);
+            return lunchOptions[randomIndex];
+        }
+
+        function startSpinning() {
+            clearTimeout(spinningTimeout);
+            clearTimeout(slowdownTimeout);
+
+            spinButton.disabled = true;
+            findButton.classList.remove('visible'); // Hide button right away
+
+            let spinDuration = 50;
+            let spinCount = 0;
+            const totalSpinTime = 2500;
+            const slowdownStart = 1500;
+
+            function spinCycle() {
+                currentChoice = getRandomLunchOption();
+                reel1.textContent = currentChoice.display;
+
+                spinCount += spinDuration;
+
+                if (spinCount > slowdownStart) {
+                    spinDuration = Math.min(spinDuration * 1.2, 300);
+                }
+
+                if (spinCount < totalSpinTime) {
+                    spinningTimeout = setTimeout(spinCycle, spinDuration);
+                } else {
+                    stopSpinning();
+                }
+            }
+            spinCycle();
+        }
+
+        function stopSpinning() {
+            // Final choice is already set by the last spinCycle
+            reel1.textContent = currentChoice.display;
+
+            const mapsQuery = encodeURIComponent(`${currentChoice.search} near me`);
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+            findButton.textContent = `Find ${currentChoice.search} Near Me`;
+            findButton.href = mapsUrl;
+
+            // Show the button
+            setTimeout(() => {
+                findButton.classList.add('visible');
+            }, 100); 
+
+            spinButton.disabled = false;
+        }
+
+        spinButton.addEventListener('click', startSpinning);
+
+        // Ensure button is hidden on page load
+        document.addEventListener('DOMContentLoaded', () => {
+           findButton.classList.remove('visible');
+           // Just in case of bfcache
+           spinButton.disabled = false;
+        });
+    </script>
+</body>
+</html>
+
