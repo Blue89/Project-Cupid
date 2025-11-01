@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lunch Cupid</title>
+    <!-- THIS IS THE LINE TO FIX THE SEO ERROR -->
+    <link rel="canonical" href="https://lunchcupid.com/">
+    
+    <title>Lunch Cupid - Lunch Spinner</title>
     
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,12 +17,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
 
     <style>
-        /* Define custom font classes  */
+        /* Define custom font classes */
         .font-pacifico { font-family: 'Pacifico', cursive; }
         .font-inter { font-family: 'Inter', sans-serif; }
 
+        /* Prevent scrolling within the embed */
+        html, body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            /* overflow: hidden !important; */ /* Let's try removing this to see if it helps */
+            box-sizing: border-box;
+        }
+
         /* --- Spinner Styles --- */
-        /* (These are the styles from our previous spinner code) */
         .slot-machine-container {
             background-color: #ffffff;
             padding: 25px;
@@ -29,7 +41,7 @@
             max-width: 400px;
             width: 100%;
             box-sizing: border-box;
-            overflow: hidden; /* Prevent internal scroll */
+            /* overflow: hidden;  */ /* Also removing this */
             position: relative;
         }
         .reels {
@@ -98,6 +110,8 @@
             width: 80%;
             max-width: 250px;
             box-sizing: border-box;
+            
+            /* Logic for hiding/showing */
             opacity: 0;
             visibility: hidden;
             display: inline-block;
@@ -124,8 +138,10 @@
         <!-- 
           IMAGE PLACEHOLDER:
           Replace the 'src' link below with the URL for your own banner image.
+          If you add an image to your GitHub repo (e.g., "banner.jpg"),
+          you can just change the src to: src="banner.jpg"
         -->
-        <img src="Pintxos.jpg" 
+        <img src="https://images.pexels.com/photos/12711732/pexels-photo-12711732.jpeg" 
              onerror="this.src='https://placehold.co/1200x400/333/fff?text=Lunch+Cupid+Image'; this.style.objectFit='cover';"
              class="w-full h-full object-cover" 
              alt="A display counter filled with various tapas and pintxos">
