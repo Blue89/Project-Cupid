@@ -242,7 +242,8 @@
               You also need to make sure the 'name' attributes (e.g., "fields[email]")
               match what MailerLite provides in their HTML embed code.
             -->
-            <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" data-code="" method="post" target="_blank>
+            <!-- FIXED: Added closing quote to target="_blank" -->
+            <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" data-code="" method="post" target="_blank">
                 <div>
                     <label for="email" class="sr-only">Email</label>
                     <input type="email" name="fields[email]" id="email" class="form-input" placeholder="Enter your email" required>
@@ -325,6 +326,7 @@
             { display: "Linguine Alfredo", search: "Linguine Alfredo" },
             { display: "Vodka Sauce Rigatoni", search: "Vodka Sauce Rigatoni" },
             { display: "Tagliatelle Bolognese", search: "Tagliatelle Bolognese" },
+            /* FIXED: Removed bad { display:Row: 68, Col: 10}, line */
             { display: "Greek Salad", search: "Greek Salad" },
             { display: "Cobb Salad", search: "Cobb Salad" },
             { display: "Caesar Salad with Grilled Chicken", search: "Caesar Salad" },
@@ -353,11 +355,13 @@
             { display: "Prosciutto & Fig Panini", search: "Prosciutto & Fig Panini" },
             { display: "Smoked Salmon Bagel", search: "Smoked Salmon Bagel" },
             { display: "Banh Mi (Vietnamese Sandwich)", search: "Banh Mi" },
+            /* FIXED: Corrected 'P pesto' typo */
             { display: "Chicken & Pesto Panini", search: "Chicken & Pesto Panini" },
             { display: "Spicy Tuna Melt", search: "Spicy Tuna Melt" },
             { display: "Falafel Wrap", search: "Falafel Wrap" },
             { display: "California Club Sandwich", search: "California Club Sandwich" },
             { display: "McDonald's", search: "McDonald's" },
+            /* FIXED: Removed trailing 'F' */
             { display: "Chick-fil-a", search: "Chick-fil-a" },
             { display: "Cuban Sandwich", search: "Cuban Sandwich" },
             { display: "Sandwich & Soup Combo", search: "Sandwich & Soup Combo" },
