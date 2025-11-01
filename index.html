@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- THIS IS THE LINE TO FIX THE SEO ERROR -->
+    
+    <!-- SEO Canonical Tag -->
     <link rel="canonical" href="https://lunchcupid.com/">
-
-    <!-- FAVICON LINK  -->
+    
+    <!-- Favicon Link (Assumes "favicon.png" is in the root of the repo) -->
     <link rel="icon" type="image/png" href="favicon.png">
-
     
     <title>Lunch Cupid - Lunch Spinner</title>
     
@@ -132,14 +132,74 @@
             margin-bottom: 15px;
             font-size: 1.4em;
         }
+
+        /* --- Email Form Styles --- */
+        .email-signup-container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .email-signup-container h3 {
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+        .email-signup-container p {
+            color: #6b7280;
+            font-size: 0.95em;
+            margin-bottom: 20px;
+        }
+        .email-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .form-input:focus {
+            border-color: #4f46e5;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+        .submit-button {
+            background-color: #4f46e5;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .submit-button:hover {
+            background-color: #4338ca;
+        }
+
     </style>
 </head>
 <body class="bg-gray-100 font-inter">
 
     <!-- 1. Header Banner Section -->
     <div class="relative w-full h-64 md:h-80 bg-black">
-
-        <img src="Pintxos.jpg" 
+        
+        <!-- 
+          IMAGE PLACEHOLDER:
+          This is now pointing to your "pintxos.jpg" file.
+        -->
+        <img src="pintxos.jpg" 
              onerror="this.src='https://placehold.co/1200x400/333/fff?text=Lunch+Cupid+Image'; this.style.objectFit='cover';"
              class="w-full h-full object-cover" 
              alt="A display counter filled with various tapas and pintxos">
@@ -171,7 +231,34 @@
         
     </div>
 
-    <!-- 3. JavaScript for Spinner -->
+    <!-- 3. Email Signup Section -->
+    <div class="w-full flex justify-center pb-12 px-4">
+        <div class="email-signup-container">
+            <h3>Get Your Daily Lunch Pick!</h3>
+            <p>Sign up to get a fresh lunch idea delivered to your inbox daily.</p>
+            
+            <!-- 
+              IMPORTANT: Replace the 'action' URL below with the one from your MailerLite form.
+              You also need to make sure the 'name' attributes (e.g., "fields[email]")
+              match what MailerLite provides in their HTML embed code.
+            -->
+            <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" data-code="" method="post" target="_blank>
+                <div>
+                    <label for="email" class="sr-only">Email</label>
+                    <input type="email" name="fields[email]" id="email" class="form-input" placeholder="Enter your email" required>
+                </div>
+                <div>
+                    <label for="zip" class="sr-only">Zip Code</label>
+                    <input type="text" name="fields[zip_code]" id="zip" class="form-input" placeholder="Enter your zip code" required> 
+                    <!-- NOTE: 'name' might be different, like "fields[zipcode]" -->
+                </div>
+                <button type="submit" class="submit-button">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- 4. JavaScript for Spinner -->
     <script>
         const lunchOptions = [
              { display: "Pizza Slice", search: "Pizza" },
