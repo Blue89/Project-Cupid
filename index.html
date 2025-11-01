@@ -127,33 +127,23 @@
         .find-button:hover {
             background-color: #059669;
         }
-        .slot-machine-container h2 {
+        
+        /* NEW: Shared heading class */
+        .box-heading {
             color: #1f2937;
             margin-bottom: 15px;
             font-size: 1.4em;
+            font-weight: 700; /* Ensures both are bold */
         }
-
-        /* --- Email Form Styles --- */
-        .email-signup-container {
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .email-signup-container h3 {
-            color: #1f2937;
-            margin-bottom: 8px;
-            font-size: 1.3em;
-            font-weight: 700;
-        }
+               
         .email-signup-container p {
             color: #6b7280;
             font-size: 0.95em;
             margin-bottom: 20px;
+        }
+        .email-signup-container p .text-small {
+            font-size: 0.75em; /* Makes this part smaller */
+            color: #9ca3af; /* A lighter gray for fine print */
         }
         .email-form {
             display: flex;
@@ -219,7 +209,7 @@
         
         <!-- This is the spinner code from before -->
         <div class="slot-machine-container">
-            <h2>Spin for Lunch!</h2>
+            <h2 class="box-heading">Spin for Lunch!</h2>
             <div class="reels">
                 <div class="reel" id="reel1">Ready?</div>
             </div>
@@ -229,12 +219,12 @@
             </div>
         </div>
         
-
+        <!-- Email Signup Container -->
             <div class="email-signup-container">
-                <h3>Lunch Cupid Delivered</h3>
-                <p>Sign up with email - Lunch Cupid will shoot a lunch recommendation to your inbox every day at 10:45am.
-
-                    Zip used to determine time zone.
+                <h2 class="box-heading">Lunch Cupid Delivered</h2>
+                <p>Sign up with email - Lunch Cupid will shoot a <b>lunch recommendation to your inbox every day at 10:45am.</b>
+                    <br>
+                    <span class="text-small">Zip used to determine time zone.</span>
                 </p>
                 
                 <!-- FIXED: Added closing quote to target="_blank" -->
