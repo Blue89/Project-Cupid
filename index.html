@@ -214,7 +214,7 @@
         </div>
     </div>
 
-    <!-- 2. Spinner Section -->
+    <!-- 2. Spinner and Email Signup Section -->
     <div class="w-full flex flex-col md:flex-row justify-center items-start gap-8 py-12 px-4">
         
         <!-- This is the spinner code from before -->
@@ -229,34 +229,31 @@
             </div>
         </div>
         
-    </div>
 
-    <!-- 3. Email Signup Section -->
-    <div class="w-full flex justify-center pb-12 px-4">
-        <div class="email-signup-container">
-            <h3>Get Your Daily Lunch Pick!</h3>
-            <p>Sign up to get a fresh lunch idea delivered to your inbox daily.</p>
-            
-            <!-- 
-              IMPORTANT: Replace the 'action' URL below with the one from your MailerLite form.
-              You also need to make sure the 'name' attributes (e.g., "fields[email]")
-              match what MailerLite provides in their HTML embed code.
-            -->
-            <!-- FIXED: Added closing quote to target="_blank" -->
-            <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" data-code="" method="post" target="_blank">
-                <div>
-                    <label for="email" class="sr-only">Email</label>
-                    <input type="email" name="fields[email]" id="email" class="form-input" placeholder="Enter your email" required>
-                </div>
-                <div>
-                    <label for="zip" class="sr-only">Zip Code</label>
-                    <input type="text" name="fields[zip_code]" id="zip" class="form-input" placeholder="Enter your zip code" required> 
-                    <!-- NOTE: 'name' might be different, like "fields[zipcode]" -->
-                </div>
-                <button type="submit" class="submit-button">Subscribe</button>
-            </form>
+            <div class="email-signup-container">
+                <h3>Get Your Daily Lunch Pick!</h3>
+                <p>Sign up to get a fresh lunch idea delivered to your inbox daily.</p>
+                
+                <!-- 
+                  IMPORTANT: Replace the 'action' URL below with the one from your MailerLite form.
+                  You also need to make sure the 'name' attributes (e.g., "fields[email]")
+                  match what MailerLite provides in their HTML embed code.
+                -->
+                <!-- FIXED: Added closing quote to target="_blank" -->
+                <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" data-code="" method="post" target="_blank">
+                    <div>
+                        <label for="email" class="sr-only">Email</label>
+                        <input type="email" name="fields[email]" id="email" class="form-input" placeholder="Enter your email" required>
+                    </div>
+                    <div>
+                        <label for="zip" class="sr-only">Zip Code</label>
+                        <input type="text" name="fields[zip_code]" id="zip" class="form-input" placeholder="Enter your zip code" required> 
+                        <!-- NOTE: 'name' might be different, like "fields[zipcode]" -->
+                    </div>
+                    <button type="submit" class="submit-button">Subscribe</button>
+                </form>
+            </div>
         </div>
-    </div>
 
 
     <!-- 4. JavaScript for Spinner -->
