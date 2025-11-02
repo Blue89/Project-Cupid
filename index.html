@@ -177,7 +177,17 @@
         .submit-button:hover {
             background-color: #4338ca;
         }
-
+        .success-message {
+            color: #059669; /* A nice green */
+            font-weight: bold;
+            padding: 20px;
+            border: 2px solid #a7f3d0;
+            border-radius: 8px;
+            background-color: #f0fdfa;
+            display: none; /* Hidden by default */
+        }
+        .form-content.hidden {
+            display: none; /* Utility class to hide the form */
     </style>
 </head>
 <body class="bg-gray-100 font-inter">
@@ -228,7 +238,29 @@
                 </p>
                 
                 <!-- FIXED: Added closing quote to target="_blank" -->
-                <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" data-code="" method="post" target="_blank">
+                <div id="form-content">
+                    <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" method="POST" id="email-form" class="email-form">
+                        <div>
+                            <label for="email" class="sr-only">Email</label>
+                            <input type="email" name="fields[email]" id="email" class="form-input" placeholder="Enter your email" required>
+                        </div>
+                        <div>
+                            <label for="zip" class="sr-only">Zip Code</label>
+                            <input type="text" name="fields[zip_code]" id="zip" class="form-input" placeholder="Enter your zip code" required> 
+                            <!-- NOTE: 'name' might be different, like "fields[zipcode]" -->
+                        </div>
+                        <button type="submit" class="submit-button">Subscribe</button>
+                    </form>
+                </div>
+
+            <!-- This success message is hidden by default -->
+                <div id="success-message" class="success-message">
+                    Thanks for subscribing!
+                </div>
+            </div>
+
+            <div id="form-content">
+                <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" method="POST" target="_blank" class+"email-form">
                     <div>
                         <label for="email" class="sr-only">Email</label>
                         <input type="email" name="fields[email]" id="email" class="form-input" placeholder="Enter your email" required>
@@ -416,6 +448,33 @@
         }
 
         spinButton.addEventListener('click', startSpinning);
+            // --- New code for Email Form Submission ---
+    
+            const emailForm = document.getElementById('email-form');
+            const formContent = document.getElementById('form-content');
+            const successMessage = document.getElementById('success-message');
+    
+            emailForm.addEventListener('submit', function(event) {
+                // 1. Prevent the form from opening a new tab
+                event.preventDefault();
+    
+                // 2. Get the form data
+                const formData = new FormData(emailForm);
+    
+                // 3. Send the data in the background
+                // We use 'no-cors' mode, which means we send the data
+                // but can't see the response. We just "fire and forget".
+                fetch(emailForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors' 
+                })
+                .catch(error => console.error('Error:', error));
+    
+                // 4. Assume success: Hide the form and show the success message
+                formContent.classList.add('hidden');
+                successMessage.style.display = 'block';
+            });
 
         // Ensure button is hidden on page load
         document.addEventListener('DOMContentLoaded', () => {
