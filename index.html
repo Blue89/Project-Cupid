@@ -41,8 +41,11 @@
             background-color: #f3f4f6;
             margin: 0;
             padding: 0;
-            /* overflow: hidden !important; */ /* Let's try removing this to see if it helps */
             box-sizing: border-box;
+            /* Added for sticky footer */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* --- Spinner Styles --- */
@@ -137,6 +140,22 @@
         .find-button:hover {
             background-color: #059669;
         }
+        .share-button {
+            background: none;
+            border: 1px solid #d1d5db; /* gray-300 */
+            color: #4f46e5; /* indigo-600 */
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 15px; /* Add space below it */
+        }
+        .share-button:hover {
+            background-color: #f0f0f8; /* A very light indigo */
+            border-color: #a5b4fc; /* indigo-300 */
+        }
         
         /* NEW: Shared heading class */
         .box-heading {
@@ -198,6 +217,28 @@
         }
         .form-content.hidden {
             display: none; /* Utility class to hide the form */
+        
+        }
+            /* --- Footer Styles --- */
+        .footer {
+            background-color: #e5e7eb; /* gray-200 */
+            text-align: center;
+            padding: 24px;
+            margin-top: auto; /* Pushes footer to bottom */
+            font-size: 0.875em;
+            color: #6b7280; /* gray-500 */
+        }
+        .footer p {
+            margin: 0;
+        }
+        .footer a {
+            color: #4f46e5; /* indigo-600 */
+            text-decoration: underline;
+            margin: 0 8px;
+        }
+        .footer a:hover {
+            color: #4338ca; /* indigo-700 */
+        }
     </style>
 </head>
 <body class="bg-gray-100 font-inter">
@@ -230,6 +271,15 @@
         <!-- This is the spinner code from before -->
         <div class="slot-machine-container">
             <h2 class="box-heading">Spin for Lunch!</h2>
+            <!-- SHARE BUTTON -->
+            <button class="share-button" id="shareButton">
+                <!-- Simple share icon (inline SVG) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline-block mr-1 align-text-bottom" viewBox="0 0 16 16">
+                  <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+                </svg>
+                Share This Website
+            </button>
+            <!-- END SHARE BUTTON -->
             <div class="reels">
                 <div class="reel" id="reel1">Ready?</div>
             </div>
@@ -268,9 +318,15 @@
                     Thanks for subscribing!
                 </div>
             </div>
-
-
-    <!-- 4. JavaScript for Spinner -->
+        <footer class="footer">
+        <p>© 2025 Lunch Cupid</p>
+        <div class="mt-2">
+            <a href="/privacy.html" class="hover:text-indigo-700">Privacy Policy</a>
+            <span class="mx-2">&bull;</span>
+            <a href="mailto:contact@lunchcupid.com" class="hover:text-indigo-700">Send Feedback</a>
+        </div>
+    </footer>
+    <!-- JavaScript for Spinner -->
     <script>
         const lunchOptions = [
              { display: "Pizza Slice", search: "Pizza" },
@@ -290,7 +346,7 @@
             { display: "Korean BBQ Beef Bowl (Bibimbap-style)", search: "Korean Beef Bowl" },
             { display: "Grain Bowl (Quinoa/Farro, etc.)", search: "Grain Bowl" },
             { display: "Mediterranean Bowl", search: "Mediterranean Bowl" },
-            { display: "Chili (Beef or Vegetarian)", search: "Chili con Carne" },
+            { display: "Chili con Carne", search: "Chili con Carne" },
             { display: "Macaroni & Cheese", search: "Macaroni & Cheese" },
             { display: "Chicken & Rice Casserole", search: "Chicken Rice Casserole" },
             { display: "Chipotle", search: "Chipotle" },
@@ -337,7 +393,6 @@
             { display: "Linguine Alfredo", search: "Linguine Alfredo" },
             { display: "Vodka Sauce Rigatoni", search: "Vodka Sauce Rigatoni" },
             { display: "Tagliatelle Bolognese", search: "Tagliatelle Bolognese" },
-            /* FIXED: Removed bad { display:Row: 68, Col: 10}, line */
             { display: "Greek Salad", search: "Greek Salad" },
             { display: "Cobb Salad", search: "Cobb Salad" },
             { display: "Caesar Salad with Grilled Chicken", search: "Caesar Salad" },
@@ -366,13 +421,11 @@
             { display: "Prosciutto & Fig Panini", search: "Prosciutto & Fig Panini" },
             { display: "Smoked Salmon Bagel", search: "Smoked Salmon Bagel" },
             { display: "Banh Mi (Vietnamese Sandwich)", search: "Banh Mi" },
-            /* FIXED: Corrected 'P pesto' typo */
             { display: "Chicken & Pesto Panini", search: "Chicken & Pesto Panini" },
             { display: "Spicy Tuna Melt", search: "Spicy Tuna Melt" },
             { display: "Falafel Wrap", search: "Falafel Wrap" },
             { display: "California Club Sandwich", search: "California Club Sandwich" },
             { display: "McDonald's", search: "McDonald's" },
-            /* FIXED: Removed trailing 'F' */
             { display: "Chick-fil-a", search: "Chick-fil-a" },
             { display: "Cuban Sandwich", search: "Cuban Sandwich" },
             { display: "Sandwich & Soup Combo", search: "Sandwich & Soup Combo" },
@@ -469,7 +522,49 @@
                 formContent.classList.add('hidden');
                 successMessage.style.display = 'block';
             });
+        // --- New code for Share Button ---
+        const shareButton = document.getElementById('shareButton');
+        
+        shareButton.addEventListener('click', async () => {
+            const shareData = {
+                title: 'Lunch Cupid',
+                text: "Here's a fun little app for deciding what to eat for lunch!",
+                url: 'https://lunchcupid.com'
+            };
 
+            if (navigator.share) {
+                // Use Web Share API (modern mobile browsers)
+                try {
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.error('Error sharing:', err);
+                }
+            } else {
+                // Fallback to "Copy Link" for desktop
+                try {
+                    // Use the older execCommand for broad compatibility, including iframes
+                    const tempInput = document.createElement('input');
+                    tempInput.style.position = 'absolute';
+                    tempInput.style.left = '-9999px';
+                    tempInput.value = shareData.url;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    
+                    // Show a "Copied!" message
+                    const originalText = shareButton.innerHTML;
+                    shareButton.innerHTML = 'Link Copied!';
+                    setTimeout(() => {
+                        shareButton.innerHTML = originalText;
+                    }, 2000);
+
+                } catch (err) {
+                    // Failsafe in case execCommand is also blocked
+                    alert('Could not copy link. Please manually copy: https://lunchcupid.com');
+                }
+            }
+        });
         // Ensure button is hidden on page load
         document.addEventListener('DOMContentLoaded', () => {
            findButton.classList.remove('visible');
