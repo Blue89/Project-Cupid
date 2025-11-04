@@ -63,22 +63,23 @@
         }
         .reels {
             display: flex;
+            flex-direction: column; /* Stack reels vertically */
             justify-content: center;
             margin-bottom: 20px;
             overflow: hidden;
-            min-height: 80px;
+            height: 120px; /* Give it a fixed height */
             align-items: center;
-            border: 2px solid #d1d5db;
+            border: 2px solid #fecdd3; /* rose-200 */
             background-color: #f9fafb;
             border-radius: 8px;
-            padding: 10px;
+            padding: 0 10px; /* Remove vertical padding */
         }
         .reel {
-            font-size: 1.25em;
+            font-size: 1.1em; /* Make text a bit smaller */
             font-weight: bold;
             color: #374151;
-            min-height: 50px;
-            line-height: 1.35;
+            min-height: 40px; /* Set height for each reel item */
+            line-height: 40px;
             text-align: center;
             overflow-wrap: break-word;
             word-wrap: break-word;
@@ -87,6 +88,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: all 0.1s ease-out;
+        }
+
+        /* Style the "center" reel to be prominent */
+        #reel2 {
+            font-size: 1.3em;
+            color: #111827;
+        }
+        
+        /* Style the "outer" reels to be faded */
+        #reel1, #reel3 {
+            opacity: 0.4;
+            transform: scale(0.85);
         }
         .buttons-container {
             display: flex;
@@ -96,7 +110,7 @@
             margin-top: 15px;
         }
         .spin-button {
-            background-color: #4f46e5;
+            background-color: #fb7185;
             color: white;
             padding: 12px 25px;
             border: none;
@@ -108,14 +122,14 @@
             max-width: 250px;
         }
         .spin-button:hover {
-            background-color: #4338ca;
+            background-color: #f43f5e;
         }
         .spin-button:disabled {
             background-color: #9ca3af;
             cursor: not-allowed;
         }
         .find-button {
-            background-color: #10b981;
+            background-color: #a78bfa;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -138,7 +152,7 @@
             visibility: visible;
         }
         .find-button:hover {
-            background-color: #059669;
+            background-color: #8b5cf6;
         }
         .share-button {
             background: none;
@@ -281,7 +295,9 @@
             </button>
             <!-- END SHARE BUTTON -->
             <div class="reels">
-                <div class="reel" id="reel1">Ready?</div>
+                <div class="reel" id="reel1"></div>
+                <div class="reel" id="reel2">Ready?</div>
+                <div class="reel" id="reel3"></div>
             </div>
             <div class="buttons-container">
                 <button class="spin-button" id="spinButton">Spin!</button>
@@ -434,6 +450,23 @@
         ];
 
         const reel1 = document.getElementById('reel1');
+        const reel2 = document.getElementById('reel2');
+        const reel3 = document.getElementById('reel3');
+
+        // Cupid-themed pastel colors for the text
+        const pastelColors = [
+            '#f43f5e', // rose-500
+            '#ec4899', // pink-500
+            '#d946ef', // fuchsia-500
+            '#a855f7', // purple-500
+            '#8b5cf6', // violet-500
+        ];
+
+        function getRandomColor() {
+            const randomIndex = Math.floor(Math.random() * pastelColors.length);
+            return pastelColors[randomIndex];
+        }        
+        
         const spinButton = document.getElementById('spinButton');
         const findButton = document.getElementById('findButton');
         let spinningTimeout = null;
@@ -454,6 +487,8 @@
             
             spinButton.disabled = true;
             findButton.classList.remove('visible'); // Hide button right away
+            reel1.textContent = '';
+            reel3.textContent = '';
 
             let spinDuration = 50;
             let spinCount = 0;
@@ -461,8 +496,31 @@
             const slowdownStart = 1500;
 
             function spinCycle() {
+                // This creates the "rolling" effect
+                reel3.textContent = reel2.textContent;
+                reel3.style.color = reel2.style.color;
+                
+                reel2.textContent = reel1.textContent;
+                reel2.style.color = reel1.style.color;
+
+                // The new item appears at the top
                 currentChoice = getRandomLunchOption();
-                reel1.textContent = currentChoice.display;
+                // Set final choice in the middle reel and clear the others
+               reel1.textContent = currentChoice.display;
+                reel1.style.color = getRandomColor();
+
+                spinCount += spinDuration;
+
+                if (spinCount > slowdownStart) {
+                    spinDuration = Math.min(spinDuration * 1.25, 300); // Slow down
+                }
+
+                if (spinCount < totalSpinTime) {
+                    spinningTimeout = setTimeout(spinCycle, spinDuration);
+                } else {
+                    stopSpinning();
+                }
+            }
 
                 spinCount += spinDuration;
 
@@ -481,8 +539,11 @@
 
         function stopSpinning() {
             // Final choice is already set by the last spinCycle
-            reel1.textContent = currentChoice.display;
-
+            reel1.textContent = '';
+            reel2.textContent = currentChoice.display;
+            reel2.style.color = '#111827'; // Make final choice dark
+            reel3.textContent = '';
+            
             const mapsQuery = encodeURIComponent(`${currentChoice.search} near me`);
             const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
 
