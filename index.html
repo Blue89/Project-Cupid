@@ -449,6 +449,9 @@
             clearTimeout(spinningTimeout);
             clearTimeout(slowdownTimeout);
 
+            // Track spin events
+            gtag('event', 'spin_button_click', { 'event_category': 'Spinner' });
+            
             spinButton.disabled = true;
             findButton.classList.remove('visible'); // Hide button right away
 
@@ -495,8 +498,18 @@
         }
 
         spinButton.addEventListener('click', startSpinning);
+
+        // Track clicks on the "Find Near Me" button
+        findButton.addEventListener('click', () => {
+            if (currentChoice) {
+                gtag('event', 'find_near_me_click', {
+                    'event_category': 'Engagement',
+                    'event_label': currentChoice.search // This sends the food item!
+                });
+            }
+        });
+        
             // --- New code for Email Form Submission ---
-    
             const emailForm = document.getElementById('email-form');
             const formContent = document.getElementById('form-content');
             const successMessage = document.getElementById('success-message');
@@ -504,6 +517,9 @@
             emailForm.addEventListener('submit', function(event) {
                 // 1. Prevent the form from opening a new tab
                 event.preventDefault();
+
+                // Track email signups
+                gtag('event', 'email_subscribe_attempt', { 'event_category': 'Conversion' });
     
                 // 2. Get the form data
                 const formData = new FormData(emailForm);
@@ -532,6 +548,9 @@
                 url: 'https://lunchcupid.com'
             };
 
+            //Track website shares
+            gtag('event', 'share_website_click', { 'event_category': 'Engagement' });
+            
             if (navigator.share) {
                 // Use Web Share API (modern mobile browsers)
                 try {
