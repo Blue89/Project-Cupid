@@ -334,14 +334,18 @@
                     Thanks for subscribing!
                 </div>
             </div>
-        <footer class="footer">
-        <p>© 2025 Lunch Cupid</p>
-        <div class="mt-2">
-            <a href="/privacy.html" class="hover:text-indigo-700">Privacy Policy</a>
-            <span class="mx-2">&bull;</span>
-            <a href="mailto:contact@lunchcupid.com" class="hover:text-indigo-700">Send Feedback</a>
         </div>
-    </footer>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Lunch Cupid</p>
+            <div class="mt-2">
+                <a href="/privacy.html" class="hover:text-indigo-700">Privacy Policy</a>
+                <span class="mx-2">&bull;</span>
+                <a href="mailto:contact@lunchcupid.com" class="hover:text-indigo-700">Send Feedback</a>
+            </div>
+        </footer>
+    
     <!-- JavaScript for Spinner -->
     <script>
         const lunchOptions = [
@@ -520,22 +524,7 @@
                 } else {
                     stopSpinning();
                 }
-            }
 
-                spinCount += spinDuration;
-
-                if (spinCount > slowdownStart) {
-                    spinDuration = Math.min(spinDuration * 1.2, 300);
-                }
-
-                if (spinCount < totalSpinTime) {
-                    spinningTimeout = setTimeout(spinCycle, spinDuration);
-                } else {
-                    stopSpinning();
-                }
-            }
-            spinCycle();
-        }
 
         function stopSpinning() {
             // Final choice is already set by the last spinCycle
