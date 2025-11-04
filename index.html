@@ -35,7 +35,6 @@
         .font-pacifico { font-family: 'Pacifico', cursive; }
         .font-inter { font-family: 'Inter', sans-serif; }
 
-        /* Prevent scrolling within the embed */
         html, body {
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
@@ -46,6 +45,11 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+        }
+        
+        /* This is the main content wrapper */
+        .main-content-wrapper {
+            flex-grow: 1; /* This makes it expand and push the footer down */
         }
 
         /* --- Spinner Styles --- */
@@ -58,36 +62,81 @@
             max-width: 400px;
             width: 100%;
             box-sizing: border-box;
-            /* overflow: hidden;  */ /* Also removing this */
             position: relative;
         }
+
+        /* NEW REEL STYLES:
+          This is now the "window" for the slot machine.
+        */
         .reels {
+            position: relative; /* Crucial for positioning overlays */
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
-            overflow: hidden;
-            min-height: 80px;
+            overflow: hidden; /* This hides the long scrolling strip */
+            height: 120px; /* This defines the 3-item window (3 * 40px) */
             align-items: center;
-            border: 2px solid #d1d5db;
+            border: 2px solid #fecdd3; /* rose-200 */
             background-color: #f9fafb;
             border-radius: 8px;
-            padding: 10px;
+            padding: 0 10px;
         }
-        .reel {
+
+        /* Gradient overlay for the top fade-out effect */
+        .reels::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px; /* Same height as one item */
+            background: linear-gradient(to bottom, #f9fafb 20%, transparent);
+            z-index: 2;
+        }
+
+        /* Gradient overlay for the bottom fade-out effect */
+        .reels::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px; /* Same height as one item */
+            background: linear-gradient(to top, #f9fafb 20%, transparent);
+            z-index: 2;
+        }
+
+        /* This is the long vertical strip that will scroll */
+        .reel-strip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* This transition is the heart of the animation.
+              - 5s duration (CHANGED FROM 6s)
+              - 'cubic-bezier' curve (easeOutExpo) starts fast and slows down very gradually.
+            */
+            transition: transform 5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* This is the style for each individual food item in the strip */
+        .reel-cell {
             font-size: 1.25em;
             font-weight: bold;
             color: #374151;
-            min-height: 50px;
-            line-height: 1.35;
+            height: 40px; /* This MUST match the heights in the gradients */
+            line-height: 40px;
             text-align: center;
-            overflow-wrap: break-word;
-            word-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap; /* Keep items on one line */
             width: 100%;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+        
         .buttons-container {
             display: flex;
             flex-direction: column;
@@ -96,7 +145,7 @@
             margin-top: 15px;
         }
         .spin-button {
-            background-color: #4f46e5;
+            background-color: #fb7185; /* rose-400 */
             color: white;
             padding: 12px 25px;
             border: none;
@@ -108,14 +157,14 @@
             max-width: 250px;
         }
         .spin-button:hover {
-            background-color: #4338ca;
+            background-color: #f43f5e; /* rose-500 */
         }
         .spin-button:disabled {
             background-color: #9ca3af;
             cursor: not-allowed;
         }
         .find-button {
-            background-color: #10b981;
+            background-color: #a78bfa; /* violet-400 */
             color: white;
             padding: 10px 20px;
             border: none;
@@ -138,12 +187,12 @@
             visibility: visible;
         }
         .find-button:hover {
-            background-color: #059669;
+            background-color: #8b5cf6; /* violet-500 */
         }
         .share-button {
             background: none;
-            border: 1px solid #d1d5db; /* gray-300 */
-            color: #4f46e5; /* indigo-600 */
+            border: 1px solid #bae6fd; /* NEW: sky-200 */
+            color: #38bdf8; /* NEW: sky-500 */
             padding: 6px 12px;
             border-radius: 8px;
             font-size: 0.85em;
@@ -153,8 +202,8 @@
             margin-bottom: 15px; /* Add space below it */
         }
         .share-button:hover {
-            background-color: #f0f0f8; /* A very light indigo */
-            border-color: #a5b4fc; /* indigo-300 */
+            background-color: #f0f9ff; /* NEW: sky-50 */
+            border-color: #38bdf8; /* NEW: sky-500 */
         }
         
         /* NEW: Shared heading class */
@@ -164,7 +213,20 @@
             font-size: 1.4em;
             font-weight: 700; /* Ensures both are bold */
         }
-               
+
+        /* --- Email Form Styles --- */
+        .email-signup-container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+                
         .email-signup-container p {
             color: #6b7280;
             font-size: 0.95em;
@@ -193,7 +255,7 @@
             box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
         }
         .submit-button {
-            background-color: #4f46e5;
+            background-color: #eab308; /* CHANGED: yellow-500 (more golden) */
             color: white;
             padding: 12px 25px;
             border: none;
@@ -204,7 +266,7 @@
             width: 100%;
         }
         .submit-button:hover {
-            background-color: #4338ca;
+            background-color: #ca8a04; /* CHANGED: yellow-600 (darker gold) */
         }
         .success-message {
             color: #059669; /* A nice green */
@@ -218,8 +280,9 @@
         .form-content.hidden {
             display: none; /* Utility class to hide the form */
         
-        }
-            /* --- Footer Styles --- */
+        } 
+        
+        /* --- Footer Styles --- */
         .footer {
             background-color: #e5e7eb; /* gray-200 */
             text-align: center;
@@ -246,10 +309,6 @@
     <!-- 1. Header Banner Section -->
     <div class="relative w-full h-64 md:h-80 bg-black">
         
-        <!-- 
-          IMAGE PLACEHOLDER:
-          This is now pointing to your "pintxos.jpg" file.
-        -->
         <img src="pintxos.jpg" 
              onerror="this.src='https://placehold.co/1200x400/333/fff?text=Lunch+Cupid+Image'; this.style.objectFit='cover';"
              class="w-full h-full object-cover" 
@@ -261,12 +320,12 @@
         <!-- Banner Text -->
         <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
             <h1 class="font-pacifico text-5xl md:text-7xl">Lunch Cupid</h1>
-            <p class="text-lg md:text-xl mt-2">Don't know what to get? Let Lunch Cupid pick your soul food!</p>
+            <p class="text-lg md:text-xl mt-6">Don't know what to get? Let Lunch Cupid help!</p>
         </div>
     </div>
 
     <!-- 2. Spinner and Email Signup Section -->
-    <div class="w-full flex flex-col md:flex-row justify-center items-start gap-8 py-12 px-4">
+    <div class="main-content-wrapper w-full flex flex-col md:flex-row justify-center items-start gap-8 py-12 px-4">
         
         <!-- This is the spinner code from before -->
         <div class="slot-machine-container">
@@ -280,9 +339,17 @@
                 Share This Website
             </button>
             <!-- END SHARE BUTTON -->
+            
+            <!-- NEW HTML STRUCTURE FOR REEL -->
             <div class="reels">
-                <div class="reel" id="reel1">Ready?</div>
+                <!-- This strip will be filled with items by JavaScript -->
+                <div class="reel-strip" id="reel-strip">
+                    <!-- The "Ready?" text is now centered in the middle slot -->
+                    <div class="reel-cell" style="margin-top: 40px; font-size: 1.3em; color: #111827;">Ready?</div>
+                </div>
             </div>
+            <!-- END NEW HTML STRUCTURE -->
+
             <div class="buttons-container">
                 <button class="spin-button" id="spinButton">Spin!</button>
                 <a href="#" class="find-button" id="findButton" target="_blank">Find Near Me</a>
@@ -291,13 +358,12 @@
         
         <!-- Email Signup Container -->
             <div class="email-signup-container">
-                <h2 class="box-heading">Lunch Cupid Delivered (coming soon)</h2>
+                <h2 class="box-heading">Lunch Cupid Delivered <br>(coming soon)</h2>
                 <p>Sign up with email - Lunch Cupid will shoot a <b>lunch recommendation to your inbox every day at 10:45am.</b>
                     <br>
                     <span class="text-small">Zip used to determine time zone.</span>
-                </p>
+                </p> 
                 
-                <!-- FIXED: Added closing quote to target="_blank" -->
                 <div id="form-content">
                     <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" method="POST" id="email-form" class="email-form">
                         <div>
@@ -318,20 +384,26 @@
                     Thanks for subscribing!
                 </div>
             </div>
-    </div>
-        <footer class="footer">
-            <p>© 2025 Lunch Cupid</p>
-            <div class="mt-2">
-                <a href="/privacy.html" class="hover:text-indigo-700">Privacy Policy</a>
-                <span class="mx-2">&bull;</span>
-                <a href="mailto:contact@lunchcupid.com" class="hover:text-indigo-700">Send Feedback</a>
-            </div>
-        </footer>
+            
+
+    </div> <!-- End of Main Content Section -->
+
+
+    <!-- 5. Footer Section -->
+    <footer class="footer">
+        <p>© 2025 Lunch Cupid</p>
+        <div class="mt-2">
+            <a href="/privacy.html" class="hover:text-indigo-700">Privacy Policy</a>
+            <span class="mx-2">&bull;</span>
+            <a href="mailto:contact@lunchcupid.com" class="hover:text-indigo-700">Send Feedback</a>
+        </div>
+    </footer>
     
-    <!-- JavaScript for Spinner -->
+    <!-- 4. JavaScript for Spinner (MOVED TO BOTTOM) -->
     <script>
+        // --- 1. DEFINE ALL YOUR VARIABLES ---
         const lunchOptions = [
-             { display: "Pizza Slice", search: "Pizza" },
+            { display: "Pizza Slice", search: "Pizza" },
             { display: "Cheeseburger", search: "Cheeseburger" },
             { display: "Fried Chicken Sandwich", search: "Chicken Sandwich" },
             { display: "Hot Dogs", search: "Hot Dogs" },
@@ -348,7 +420,7 @@
             { display: "Korean BBQ Beef Bowl (Bibimbap-style)", search: "Korean Beef Bowl" },
             { display: "Grain Bowl (Quinoa/Farro, etc.)", search: "Grain Bowl" },
             { display: "Mediterranean Bowl", search: "Mediterranean Bowl" },
-            { display: "Chili con Carne", search: "Chili con Carne" },
+            { display: "Chili (Beef or Vegetarian)", search: "Chili con Carne" },
             { display: "Macaroni & Cheese", search: "Macaroni & Cheese" },
             { display: "Chicken & Rice Casserole", search: "Chicken Rice Casserole" },
             { display: "Chipotle", search: "Chipotle" },
@@ -435,98 +507,140 @@
             { display: "Pho (Vietnamese Noodle Soup)", search: "Pho" }
         ];
 
-        const reel1 = document.getElementById('reel1');
+        // --- NEW SPINNER VARIABLES ---
+        const reelStrip = document.getElementById('reel-strip');
         const spinButton = document.getElementById('spinButton');
         const findButton = document.getElementById('findButton');
-        let spinningTimeout = null;
-        let slowdownTimeout = null;
-        let currentChoice = null;
+        const shareButton = document.getElementById('shareButton');
+        
+        // Form elements
+        const emailForm = document.getElementById('email-form');
+        const formContent = document.getElementById('form-content');
+        const successMessage = document.getElementById('success-message');
 
+        // Spinner state
+        let currentChoice = null;
+        // --- END NEW SPINNER VARIABLES ---
+        
+
+        // --- 2. DEFINE ALL YOUR FUNCTIONS ---
+        
         function getRandomLunchOption() {
             const randomIndex = Math.floor(Math.random() * lunchOptions.length);
             return lunchOptions[randomIndex];
         }
 
+        // --- NEW STARTSPINNING FUNCTION ---
         function startSpinning() {
-            clearTimeout(spinningTimeout);
-            clearTimeout(slowdownTimeout);
-
+            // Track spin events
+            gtag('event', 'spin_button_click', { 'event_category': 'Spinner' });
+            
             spinButton.disabled = true;
-            findButton.classList.remove('visible'); // Hide button right away
+            findButton.classList.remove('visible');
+            reelStrip.innerHTML = ''; // Clear the "Ready?" text
 
-            let spinDuration = 50;
-            let spinCount = 0;
-            const totalSpinTime = 2500;
-            const slowdownStart = 1500;
+            const itemHeight = 40; // Height of one .reel-cell (must match CSS)
+            const spinCount = 50; // Total items in the strip (more items = looks faster)
+            let stripContent = '';
 
-            function spinCycle() {
-                currentChoice = getRandomLunchOption();
-                reel1.textContent = currentChoice.display;
+            // Get the final choice *first*
+            currentChoice = getRandomLunchOption();
 
-                spinCount += spinDuration;
-
-                if (spinCount > slowdownStart) {
-                    spinDuration = Math.min(spinDuration * 1.2, 300);
-                }
-
-                if (spinCount < totalSpinTime) {
-                    spinningTimeout = setTimeout(spinCycle, spinDuration);
+            // Create the reel strip HTML
+            for (let i = 0; i < spinCount; i++) {
+                let item;
+                // Place the winner at position 48 (index 48, which is spinCount - 2)
+                if (i === spinCount - 2) {
+                    item = currentChoice;
                 } else {
-                    stopSpinning();
+                    item = getRandomLunchOption(); // Fill with random items
                 }
+                // Add pastel color to random items, make winner dark
+                const color = (i === spinCount - 2) ? '#111827' : '#374151';
+                stripContent += `<div class="reel-cell" style="color: ${color};">${item.display}</div>`;
             }
-            spinCycle();
+            reelStrip.innerHTML = stripContent;
+
+            // --- The Animation ---
+            
+            // 1. Instantly move strip to the top (no transition)
+            reelStrip.style.transition = 'none';
+            reelStrip.style.transform = 'translateY(0)';
+
+            // 2. Force browser to render this position (this is a small hack)
+            void reelStrip.offsetWidth; 
+
+            // 3. Set final position and add the "slow-down" transition
+            // 5s duration (CHANGED FROM 6s)
+            reelStrip.style.transition = 'transform 5s cubic-bezier(0.23, 1, 0.32, 1)';
+            
+            // We want to land on the item at index 48 (spinCount - 2).
+            // The "middle" slot is 1 * itemHeight (40px) from the top of the window.
+            // So, we move the strip up by (48 * 40px)
+            // Then we subtract 40px to center it in the middle slot.
+            const finalPosition = (spinCount - 2) * itemHeight - itemHeight;
+            reelStrip.style.transform = `translateY(-${finalPosition}px)`;
+
+            // 4. Set timeout to re-enable buttons *after* animation
+            setTimeout(stopSpinning, 5000); // 5000ms = 5s
         }
+        // --- END NEW STARTSPINNING FUNCTION ---
 
+        // --- NEW STOPSPINNING FUNCTION ---
         function stopSpinning() {
-            // Final choice is already set by the last spinCycle
-            reel1.textContent = currentChoice.display;
-
+            // Animation is done. 'currentChoice' is already set.
             const mapsQuery = encodeURIComponent(`${currentChoice.search} near me`);
+            // FIXED: Removed the space in 'https://'
             const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
 
             findButton.textContent = `Find ${currentChoice.search} Near Me`;
             findButton.href = mapsUrl;
 
             // Show the button
-            setTimeout(() => {
-                findButton.classList.add('visible');
-            }, 100); 
-
+            findButton.classList.add('visible');
             spinButton.disabled = false;
         }
+        // --- END NEW STOPSPINNING FUNCTION ---
+
+        // --- 3. ATTACH ALL EVENT LISTENERS ---
 
         spinButton.addEventListener('click', startSpinning);
-            // --- New code for Email Form Submission ---
-    
-            const emailForm = document.getElementById('email-form');
-            const formContent = document.getElementById('form-content');
-            const successMessage = document.getElementById('success-message');
-    
-            emailForm.addEventListener('submit', function(event) {
-                // 1. Prevent the form from opening a new tab
-                event.preventDefault();
-    
-                // 2. Get the form data
-                const formData = new FormData(emailForm);
-    
-                // 3. Send the data in the background
-                // We use 'no-cors' mode, which means we send the data
-                // but can't see the response. We just "fire and forget".
-                fetch(emailForm.action, {
-                    method: 'POST',
-                    body: formData,
-                    mode: 'no-cors' 
-                })
-                .catch(error => console.error('Error:', error));
-    
-                // 4. Assume success: Hide the form and show the success message
-                formContent.classList.add('hidden');
-                successMessage.style.display = 'block';
-            });
-        // --- New code for Share Button ---
-        const shareButton = document.getElementById('shareButton');
+
+        // Track clicks on the "Find Near Me" button
+        findButton.addEventListener('click', () => {
+            if (currentChoice) {
+                gtag('event', 'find_near_me_click', {
+                    'event_category': 'Engagement',
+                    'event_label': currentChoice.search // This sends the food item!
+                });
+            }
+        });
         
+        // Email Form Submission
+        emailForm.addEventListener('submit', function(event) {
+            // 1. Prevent the form from opening a new tab
+            event.preventDefault();
+
+            // Track email signups
+            gtag('event', 'email_subscribe_attempt', { 'event_category': 'Conversion' });
+    
+            // 2. Get the form data
+            const formData = new FormData(emailForm);
+    
+            // 3. Send the data in the background
+            fetch(emailForm.action, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' 
+            })
+            .catch(error => console.error('Error:', error));
+    
+            // 4. Assume success: Hide the form and show the success message
+            formContent.classList.add('hidden');
+            successMessage.style.display = 'block';
+        });
+
+        // Share Button
         shareButton.addEventListener('click', async () => {
             const shareData = {
                 title: 'Lunch Cupid',
@@ -534,6 +648,9 @@
                 url: 'https://lunchcupid.com'
             };
 
+            //Track website shares
+            gtag('event', 'share_website_click', { 'event_category': 'Engagement' });
+            
             if (navigator.share) {
                 // Use Web Share API (modern mobile browsers)
                 try {
@@ -544,7 +661,7 @@
             } else {
                 // Fallback to "Copy Link" for desktop
                 try {
-                    // Use the older execCommand for broad compatibility, including iframes
+                    // Use the older execCommand
                     const tempInput = document.createElement('input');
                     tempInput.style.position = 'absolute';
                     tempInput.style.left = '-9999px';
@@ -562,12 +679,13 @@
                     }, 2000);
 
                 } catch (err) {
-                    // Failsafe in case execCommand is also blocked
+                    // Failsafe
                     alert('Could not copy link. Please manually copy: https://lunchcupid.com');
                 }
             }
         });
-        // Ensure button is hidden on page load
+
+        // Run on page load
         document.addEventListener('DOMContentLoaded', () => {
            findButton.classList.remove('visible');
            // Just in case of bfcache
