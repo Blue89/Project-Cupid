@@ -13,6 +13,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Can't decide what to eat for lunch? Spin the Lunch Cupid wheel for a random meal recommendation and find it near you instantly.">
     
     <!-- SEO Canonical Tag -->
     <link rel="canonical" href="https://lunchcupid.com/">
@@ -113,10 +114,10 @@
             left: 0;
             width: 100%;
             /* This transition is the heart of the animation.
-              - 5s duration (CHANGED FROM 6s)
-              - 'cubic-bezier' curve (easeOutExpo) starts fast and slows down very gradually.
+              - 3.5s duration (CHANGED FROM 6s)
+              - 'cubic-bezier' curve (easeOutExpo) starts fast and slows down gradually.
             */
-            transition: transform 5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 3.5s cubic-bezier(0.08, 1, 0.74, 1);
         }
 
         /* This is the style for each individual food item in the strip */
@@ -454,7 +455,7 @@
             { display: "Tacos (Carne Asada, Al Pastor, or Fish)", search: "Tacos" },
             { display: "Quesadilla", search: "Quesadilla" },
             { display: "Burrito", search: "Burrito" },
-            { display: "Loaded Nachos", search: "Loaded Nachoes" },
+            { display: "Loaded Nachos", search: "Loaded Nachos" },
             { display: "Empanadas", search: "Empanadas" },
             { display: "Gyro", search: "Gyro" },
             { display: "Chicken Shawarma Plate", search: "Chicken Shawarma" },
@@ -572,7 +573,7 @@
 
             // 3. Set final position and add the "slow-down" transition
             // 5s duration (CHANGED FROM 6s)
-            reelStrip.style.transition = 'transform 5s cubic-bezier(0.23, 1, 0.32, 1)';
+            reelStrip.style.transition = 'transform 3.5s cubic-bezier(0.23, 1, 0.32, 1)';
             
             // We want to land on the item at index 48 (spinCount - 2).
             // The "middle" slot is 1 * itemHeight (40px) from the top of the window.
@@ -582,7 +583,7 @@
             reelStrip.style.transform = `translateY(-${finalPosition}px)`;
 
             // 4. Set timeout to re-enable buttons *after* animation
-            setTimeout(stopSpinning, 5000); // 5000ms = 5s
+            setTimeout(stopSpinning, 3500); // 3500ms = 3.5s
         }
         // --- END NEW STARTSPINNING FUNCTION ---
 
