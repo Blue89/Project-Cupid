@@ -121,6 +121,34 @@
             pointer-events: none; /* Don't block clicks */
             box-shadow: 0 0 12px rgba(244, 63, 94, 0.3);
         }
+
+        /* Arrows pointing to the selected item */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1em;
+            color: #f43f5e; /* rose-500 */
+            animation: flash 0.8s ease-in-out infinite;
+        }
+        
+        .arrow-left {
+            left: 8px;
+        }
+        
+        .arrow-right {
+            right: 8px;
+        }
+        
+        /* Flashing animation */
+        @keyframes flash {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
         
         /* This is the long vertical strip that will scroll */
         .reel-strip {
@@ -358,6 +386,10 @@
             
             <!-- NEW HTML STRUCTURE FOR REEL -->
             <div class="reels">
+                <div class="selection-indicator">
+                    <div class="arrow arrow-left">▶</div>
+                    <div class="arrow arrow-right">◀</div>
+                </div>
                 <!-- This strip will be filled with items by JavaScript -->
                 <div class="reel-strip" id="reel-strip">
                     <!-- The "Ready?" text is now centered in the middle slot -->
