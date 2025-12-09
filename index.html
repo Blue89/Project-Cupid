@@ -556,7 +556,7 @@
             reelStrip.innerHTML = ''; // Clear the "Ready?" text
 
             const itemHeight = 40; // Height of one .reel-cell (must match CSS)
-            const spinCount = 50; // Total items in the strip (more items = looks faster)
+            const spinCount = 60; // Total items in the strip (more items = looks faster)
             let stripContent = '';
 
             // Get the final choice *first*
@@ -566,13 +566,13 @@
             for (let i = 0; i < spinCount; i++) {
                 let item;
                 // Place the winner at position 48 (index 48, which is spinCount - 2)
-                if (i === spinCount - 2) {
+                if (i === spinCount - 5) {
                     item = currentChoice;
                 } else {
                     item = getRandomLunchOption(); // Fill with random items
                 }
                 // Add pastel color to random items, make winner dark
-                const color = (i === spinCount - 2) ? '#111827' : '#374151';
+                const color = (i === spinCount - 5) ? '#111827' : '#374151';
                 stripContent += `<div class="reel-cell" style="color: ${color};">${item.display}</div>`;
             }
             reelStrip.innerHTML = stripContent;
@@ -594,7 +594,7 @@
             // The "middle" slot is 1 * itemHeight (40px) from the top of the window.
             // So, we move the strip up by (48 * 40px)
             // Then we subtract 40px to center it in the middle slot.
-            const finalPosition = (spinCount - 2) * itemHeight - (3 * itemHeight);
+            const finalPosition = (spinCount - 5) * itemHeight - (3 * itemHeight);
             reelStrip.style.transform = `translateY(-${finalPosition}px)`;
 
             // 4. Set timeout to re-enable buttons *after* animation
