@@ -75,7 +75,7 @@
             justify-content: center;
             margin-bottom: 20px;
             overflow: hidden; /* This hides the long scrolling strip */
-            height: 120px; /* This defines the 3-item window (3 * 40px) */
+            height: 280px; /* This defines the 7-item window (7 * 40px) */
             align-items: center;
             border: 2px solid #fecdd3; /* rose-200 */
             background-color: #f9fafb;
@@ -90,7 +90,7 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 40px; /* Same height as one item */
+            height: 100px; /* Same height as 2.5 items */
             background: linear-gradient(to bottom, #f9fafb 20%, transparent);
             z-index: 2;
         }
@@ -102,11 +102,26 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 40px; /* Same height as one item */
+            height: 100px; /* Same height as 2.5 items */
             background: linear-gradient(to top, #f9fafb 20%, transparent);
             z-index: 2;
         }
 
+        /* Selection indicator - highlights the winning item */
+        .selection-indicator {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            right: 10px;
+            height: 44px;
+            transform: translateY(-50%);
+            border: 3px solid #f43f5e; /* rose-500 */
+            border-radius: 8px;
+            z-index: 3;
+            pointer-events: none; /* Don't block clicks */
+            box-shadow: 0 0 12px rgba(244, 63, 94, 0.3);
+        }
+        
         /* This is the long vertical strip that will scroll */
         .reel-strip {
             position: absolute;
@@ -146,7 +161,7 @@
             margin-top: 15px;
         }
         .spin-button {
-            background-color: #fb7185; /* rose-400 */
+            background-color: #fda4af; /* rose-300 */
             color: white;
             padding: 12px 25px;
             border: none;
@@ -158,14 +173,14 @@
             max-width: 250px;
         }
         .spin-button:hover {
-            background-color: #f43f5e; /* rose-500 */
+            background-color: #fb7185; /* rose-400 */
         }
         .spin-button:disabled {
             background-color: #9ca3af;
             cursor: not-allowed;
         }
         .find-button {
-            background-color: #a78bfa; /* violet-400 */
+            background-color: #c4b5fd; /* violet-300 */
             color: white;
             padding: 10px 20px;
             border: none;
@@ -188,7 +203,7 @@
             visibility: visible;
         }
         .find-button:hover {
-            background-color: #8b5cf6; /* violet-500 */
+            background-color: #a78bfa; /* violet-400 */
         }
         .share-button {
             background: none;
@@ -256,7 +271,7 @@
             box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
         }
         .submit-button {
-            background-color: #eab308; /* CHANGED: yellow-500 (more golden) */
+            background-color: #7dd3fc; /* sky-300 */
             color: white;
             padding: 12px 25px;
             border: none;
@@ -267,7 +282,7 @@
             width: 100%;
         }
         .submit-button:hover {
-            background-color: #ca8a04; /* CHANGED: yellow-600 (darker gold) */
+            background-color: #38bdf8; /* sky-400 */
         }
         .success-message {
             color: #059669; /* A nice green */
@@ -579,7 +594,7 @@
             // The "middle" slot is 1 * itemHeight (40px) from the top of the window.
             // So, we move the strip up by (48 * 40px)
             // Then we subtract 40px to center it in the middle slot.
-            const finalPosition = (spinCount - 2) * itemHeight - itemHeight;
+            const finalPosition = (spinCount - 2) * itemHeight - (3 * itemHeight);
             reelStrip.style.transform = `translateY(-${finalPosition}px)`;
 
             // 4. Set timeout to re-enable buttons *after* animation
