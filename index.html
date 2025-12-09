@@ -91,7 +91,7 @@
             left: 0;
             right: 0;
             height: 100px; /* Same height as 2.5 items */
-            background: linear-gradient(to bottom, #f9fafb 20%, transparent);
+            background: linear-gradient(to bottom, #f9fafb 0%, transparent 70%);
             z-index: 2;
         }
 
@@ -103,7 +103,7 @@
             left: 0;
             right: 0;
             height: 100px; /* Same height as 2.5 items */
-            background: linear-gradient(to top, #f9fafb 20%, transparent);
+            background: linear-gradient(to top, #f9fafb 0%, transparent 70%);
             z-index: 2;
         }
 
@@ -127,17 +127,21 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 1.1em;
-            color: #f43f5e; /* rose-500 */
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
             animation: flash 0.8s ease-in-out infinite;
         }
         
         .arrow-left {
             left: 12px;
+            border-left: 12px solid #f43f5e; /* Points right */
         }
         
         .arrow-right {
             right: 12px;
+            border-right: 12px solid #f43f5e; /* Points left */
         }
         
         /* Flashing animation */
@@ -388,8 +392,8 @@
             <!-- NEW HTML STRUCTURE FOR REEL -->
             <div class="reels">
                 <div class="selection-indicator">
-                    <div class="arrow arrow-left">▶</div>
-                    <div class="arrow arrow-right">◀</div>
+                    <div class="arrow arrow-left"></div>
+                    <div class="arrow arrow-right"></div>
                 </div>
                 <!-- This strip will be filled with items by JavaScript -->
                 <div class="reel-strip" id="reel-strip">
