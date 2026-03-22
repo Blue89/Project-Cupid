@@ -225,14 +225,12 @@ const emailForm    = document.getElementById('email-form');
 const formContent  = document.getElementById('form-content');
 const successMsg   = document.getElementById('success-message');
 const historyList  = document.getElementById('historyList');
-const surpriseToggle = document.getElementById('surpriseToggle');
 
 // ---------------------------------------------------------------------------
 // 3.  STATE
 // ---------------------------------------------------------------------------
 let currentChoice    = null;
 let spinHistory      = [];
-let surpriseInterval = null;
 let isSpinning       = false;
 
 // ---------------------------------------------------------------------------
@@ -350,22 +348,6 @@ if (amazonButton) {
   });
 }
 
-// Surprise Me toggle (auto-spin every 10s)
-if (surpriseToggle) {
-  surpriseToggle.addEventListener('change', () => {
-    if (surpriseToggle.checked) {
-      // Spin immediately, then every 10s
-      startSpinning();
-      surpriseInterval = setInterval(() => {
-        if (!isSpinning) startSpinning();
-      }, 10000);
-      track('surprise_me_enabled', { event_category: 'Engagement' });
-    } else {
-      clearInterval(surpriseInterval);
-      surpriseInterval = null;
-    }
-  });
-}
 
 // Share button
 if (shareButton) {

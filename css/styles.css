@@ -259,7 +259,7 @@ h1, h2, h3 { line-height: 1.2; }
 
 /* Spinner loading state */
 .reels.is-spinning .reel-strip {
-  filter: blur(1px);
+  /* blur removed per user request */
 }
 
 /* ---------- Buttons ---------- */
@@ -336,51 +336,7 @@ h1, h2, h3 { line-height: 1.2; }
   outline-offset: 3px;
 }
 
-.surprise-me-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
-}
-.surprise-toggle {
-  appearance: none;
-  width: 40px;
-  height: 22px;
-  background: #d1d5db;
-  border-radius: 999px;
-  cursor: pointer;
-  position: relative;
-  transition: background 0.25s ease;
-  flex-shrink: 0;
-}
-.surprise-toggle::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
-  background: #fff;
-  border-radius: 50%;
-  transition: left 0.25s ease;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-.surprise-toggle:checked {
-  background: #f43f5e;
-}
-.surprise-toggle:checked::after {
-  left: 20px;
-}
-.surprise-toggle:focus-visible {
-  outline: 3px solid #f43f5e;
-  outline-offset: 2px;
-}
-.surprise-label {
-  font-size: 0.88rem;
-  color: #6b7280;
-  user-select: none;
-  cursor: pointer;
-}
+/* surprise-me feature removed */
 
 /* ---------- Share Button ---------- */
 .share-button {
