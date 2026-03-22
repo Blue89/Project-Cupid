@@ -1,820 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0P1F8QL90R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- =====================================================
+       Google Analytics — DO NOT REMOVE
+       ===================================================== -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0P1F8QL90R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0P1F8QL90R');
+  </script>
 
-  gtag('config', 'G-0P1F8QL90R');
-</script>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Can't decide what to eat for lunch? Spin the Lunch Cupid wheel for a random meal recommendation and find it near you instantly.">
-    
-    <!-- SEO Canonical Tag -->
-    <link rel="canonical" href="https://lunchcupid.com/">
-    
-    <!-- Favicon Link (Assumes "favicon.png" is in the root of the repo) -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    
-    <title>Lunch Cupid</title>
-    
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Load Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+  <!-- =====================================================
+       Meta / SEO
+       ===================================================== -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Can't decide what to eat for lunch? Spin the Lunch Cupid wheel for a random meal recommendation — and find it near you instantly. Hundreds of options from pizza to poke bowls.">
+  <meta name="theme-color" content="#f43f5e">
 
-    <style>
-        /* Define custom font classes */
-        .font-pacifico { font-family: 'Pacifico', cursive; }
-        .font-inter { font-family: 'Inter', sans-serif; }
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://lunchcupid.com/">
+  <meta property="og:title"       content="Lunch Cupid - Random Lunch Picker | What Should I Eat?">
+  <meta property="og:description" content="Spin the Lunch Cupid wheel and discover your next meal. Hundreds of options — pizza, tacos, sushi, burgers, salads, and more. Find it near you in one click.">
+  <meta property="og:image"       content="https://lunchcupid.com/pintxos.jpg">
+  <meta property="og:site_name"   content="Lunch Cupid">
 
-        html, body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            /* Added for sticky footer */
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        
-        /* This is the main content wrapper */
-        .main-content-wrapper {
-            flex-grow: 1; /* This makes it expand and push the footer down */
-        }
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:site"        content="@lunchcupid">
+  <meta name="twitter:title"       content="Lunch Cupid - Random Lunch Picker | What Should I Eat?">
+  <meta name="twitter:description" content="Can't decide what to eat? Let Lunch Cupid spin a random lunch recommendation — then find it near you!">
+  <meta name="twitter:image"       content="https://lunchcupid.com/pintxos.jpg">
 
-        /* --- Spinner Styles --- */
-        .slot-machine-container {
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 550px;
-            width: 100%;
-            box-sizing: border-box;
-            position: relative;
-        }
+  <!-- Canonical -->
+  <link rel="canonical" href="https://lunchcupid.com/">
 
-        /* NEW REEL STYLES:
-          This is now the "window" for the slot machine.
-        */
-        .reels {
-            position: relative; /* Crucial for positioning overlays */
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            overflow: hidden; /* This hides the long scrolling strip */
-            height: 280px; /* This defines the 7-item window (7 * 40px) */
-            align-items: center;
-            border: 2px solid #fecdd3; /* rose-200 */
-            background-color: #f9fafb;
-            border-radius: 8px;
-            padding: 0 10px;
-        }
+  <!-- Favicon -->
+  <link rel="icon"             type="image/png"  href="favicon.png">
+  <link rel="apple-touch-icon"                   href="favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180"   href="favicon.png">
+  <meta name="apple-mobile-web-app-title"        content="Lunch Cupid">
+  <meta name="application-name"                  content="Lunch Cupid">
 
-        /* Gradient overlay for the top fade-out effect */
-        .reels::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100px; /* Same height as 2.5 items */
-            background: linear-gradient(to bottom, #f9fafb 0%, transparent 70%);
-            z-index: 2;
-        }
+  <title>Lunch Cupid - Random Lunch Picker | What Should I Eat?</title>
 
-        /* Gradient overlay for the bottom fade-out effect */
-        .reels::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px; /* Same height as 2.5 items */
-            background: linear-gradient(to top, #f9fafb 0%, transparent 70%);
-            z-index: 2;
-        }
+  <!-- =====================================================
+       Schema.org Structured Data
+       ===================================================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Lunch Cupid",
+    "url": "https://lunchcupid.com",
+    "description": "A fun random lunch picker that spins through hundreds of meal options and helps you find food near you.",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "image": "https://lunchcupid.com/pintxos.jpg"
+  }
+  </script>
 
-        /* Selection indicator - highlights the winning item */
-        .selection-indicator {
-            position: absolute;
-            top: 50%;
-            left: 5px;
-            right: 5px;
-            height: 44px;
-            transform: translateY(-50%);
-            border: 3px solid #f43f5e; /* rose-500 */
-            border-radius: 8px;
-            z-index: 3;
-            pointer-events: none; /* Don't block clicks */
-            box-shadow: 0 0 12px rgba(244, 63, 94, 0.3);
-        }
+  <!-- =====================================================
+       Fonts & Styles
+       ===================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
 
-        /* Arrows pointing to the selected item */
-        .arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-            animation: flash 0.8s ease-in-out infinite;
-        }
-        
-        .arrow-left {
-            left: 12px;
-            border-left: 12px solid #f43f5e; /* Points right */
-        }
-        
-        .arrow-right {
-            right: 12px;
-            border-right: 12px solid #f43f5e; /* Points left */
-        }
-        
-        /* Flashing animation */
-        @keyframes flash {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.3;
-            }
-        }
-        
-        /* This is the long vertical strip that will scroll */
-        .reel-strip {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            /* This transition is the heart of the animation.
-              - 3.5s duration (CHANGED FROM 6s)
-              - 'cubic-bezier' curve (easeOutExpo) starts fast and slows down gradually.
-            */
-            transition: transform 3.5s cubic-bezier(0.08, 1, 0.65, 1);
-        }
-
-        /* This is the style for each individual food item in the strip */
-        .reel-cell {
-            font-size: 1.25em;
-            font-weight: bold;
-            color: #374151;
-            height: 40px; /* This MUST match the heights in the gradients */
-            line-height: 40px;
-            text-align: center;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap; /* Keep items on one line */
-            width: 100%;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0 45px;
-        }
-        
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-top: 15px;
-        }
-        .spin-button {
-            background-color: #fb8a9e; /* between rose-300 and rose-400 */
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.05em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 80%;
-            max-width: 250px;
-        }
-        .spin-button:hover {
-            background-color: #f9637a; /* slightly darker */
-        }
-        .spin-button:disabled {
-            background-color: #9ca3af;
-            cursor: not-allowed;
-        }
-        .find-button {
-            background-color: #b5a3fb; /* between violet-300 and violet-400 */
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.95em;
-            cursor: pointer;
-            transition: background-color 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-            text-decoration: none;
-            width: 80%;
-            max-width: 250px;
-            box-sizing: border-box;
-            
-            /* Logic for hiding/showing */
-            opacity: 0;
-            visibility: hidden;
-            display: inline-block;
-        }
-        .find-button.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        .find-button:hover {
-            background-color: #9b7bf9; /* slightly darker */
-        }
-        .share-button {
-            background: none;
-            border: 1px solid #bae6fd; /* NEW: sky-200 */
-            color: #38bdf8; /* NEW: sky-500 */
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.85em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            margin-bottom: 15px; /* Add space below it */
-        }
-        .share-button:hover {
-            background-color: #f0f9ff; /* NEW: sky-50 */
-            border-color: #38bdf8; /* NEW: sky-500 */
-        }
-        
-        /* NEW: Shared heading class */
-        .box-heading {
-            color: #1f2937;
-            margin-bottom: 15px;
-            font-size: 1.4em;
-            font-weight: 700; /* Ensures both are bold */
-        }
-
-        /* --- Email Form Styles --- */
-        .email-signup-container {
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            box-sizing: border-box;
-            position: relative;
-        }
-                
-        .email-signup-container p {
-            color: #6b7280;
-            font-size: 0.95em;
-            margin-bottom: 20px;
-        }
-        .email-signup-container p .text-small {
-            font-size: 0.8em; /* Makes this part smaller */
-            color: #9ca3af; /* A lighter gray for fine print */
-        }
-        .email-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-        .form-input:focus {
-            border-color: #4f46e5;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
-        }
-        .submit-button {
-            background-color: #5fc5f7; /* between sky-300 and sky-400 */
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.05em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%;
-        }
-        .submit-button:hover {
-            background-color: #2ab4f5; /* slightly darker */
-        }
-        .success-message {
-            color: #059669; /* A nice green */
-            font-weight: bold;
-            padding: 20px;
-            border: 2px solid #a7f3d0;
-            border-radius: 8px;
-            background-color: #f0fdfa;
-            display: none; /* Hidden by default */
-        }
-        .form-content.hidden {
-            display: none; /* Utility class to hide the form */
-        
-        } 
-
-        /* --- Amazon Affiliates Box Styles --- */
-        .amazon-container {
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        
-        .amazon-container p {
-            color: #6b7280;
-            font-size: 0.95em;
-            margin-bottom: 20px;
-        }
-        
-        .amazon-button {
-            background-color: #f59e0b; /* amber-500 */
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.05em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        
-        .amazon-button:hover {
-            background-color: #d97706; /* amber-600 */
-        }
-        
-        
-        /* --- Footer Styles --- */
-        .footer {
-            background-color: #e5e7eb; /* gray-200 */
-            text-align: center;
-            padding: 24px;
-            margin-top: auto; /* Pushes footer to bottom */
-            font-size: 0.875em;
-            color: #6b7280; /* gray-500 */
-        }
-        .footer p {
-            margin: 0;
-        }
-        .footer a {
-            color: #4f46e5; /* indigo-600 */
-            text-decoration: underline;
-            margin: 0 8px;
-        }
-        .footer a:hover {
-            color: #4338ca; /* indigo-700 */
-        }
-
-        /* Right column container for stacking email + amazon boxes */
-        .right-column {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            max-width: 400px;
-            width: 100%;
-        }
-        
-    </style>
+  <!-- =====================================================
+       Google AdSense
+       REPLACE ca-pub-XXXXXXXXXXXXXXXXX WITH YOUR ACTUAL ADSENSE PUBLISHER ID
+       ===================================================== -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-100 font-inter">
+<body>
 
-    <!-- 1. Header Banner Section -->
-    <div class="relative w-full h-64 md:h-80 bg-black">
-        
-        <img src="pintxos.jpg" 
-             onerror="this.src='https://placehold.co/1200x400/333/fff?text=Lunch+Cupid+Image'; this.style.objectFit='cover';"
-             class="w-full h-full object-cover" 
-             alt="A display counter filled with various tapas and pintxos">
-        
-        <!-- Dark Overlay -->
-        <div class="absolute inset-0 bg-black opacity-40"></div>
-        
-        <!-- Banner Text -->
-        <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
-            <h1 class="font-pacifico text-5xl md:text-7xl">Lunch Cupid</h1>
-            <p class="text-lg md:text-xl mt-6">Don't know what to get? Let Lunch Cupid help!</p>
-        </div>
+  <!-- Skip to main content (accessibility) -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- =====================================================
+       HEADER / HERO
+       ===================================================== -->
+  <header class="site-header" role="banner">
+    <img
+      src="pintxos.jpg"
+      alt="A display counter filled with various colorful tapas and pintxos"
+      class="hero-img"
+      onerror="this.src='https://placehold.co/1200x400/1f2937/fff?text=Lunch+Cupid';this.style.objectFit='cover';"
+    >
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-text">
+      <h1 class="hero-title font-pacifico">Lunch Cupid</h1>
+      <p class="hero-subtitle">Don't know what to get? Let Lunch Cupid help!</p>
     </div>
+  </header>
 
-    <!-- 2. Spinner and Email Signup Section -->
-    <div class="main-content-wrapper w-full flex flex-col md:flex-row justify-center items-start gap-8 py-12 px-4">
-        
-        <!-- This is the spinner code from before -->
-        <div class="slot-machine-container">
-            <h2 class="box-heading">Spin for Lunch!</h2>
-            <!-- SHARE BUTTON -->
-            <button class="share-button" id="shareButton">
-                <!-- Simple share icon (inline SVG) -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="inline-block mr-1 align-text-bottom" viewBox="0 0 16 16">
-                  <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
-                </svg>
-                Share This Website
-            </button>
-            <!-- END SHARE BUTTON -->
-            
-            <!-- NEW HTML STRUCTURE FOR REEL -->
-            <div class="reels">
-                <div class="selection-indicator">
-                    <div class="arrow arrow-left"></div>
-                    <div class="arrow arrow-right"></div>
-                </div>
-                <!-- This strip will be filled with items by JavaScript -->
-                <div class="reel-strip" id="reel-strip">
-                    <!-- The "Ready?" text is now centered in the middle slot -->
-                    <div class="reel-cell" style="margin-top: 120px; font-size: 1.3em; color: #111827;">Ready?</div>
-                </div>
-            </div>
-            <!-- END NEW HTML STRUCTURE -->
+  <!-- =====================================================
+       AD SLOT — LEADERBOARD (728×90 desktop / responsive mobile)
+       REPLACE ca-pub-XXXXXXXXXXXXXXXXX WITH YOUR ACTUAL ADSENSE PUBLISHER ID
+       ===================================================== -->
+  <div class="ad-leaderboard" aria-label="Advertisement" role="complementary">
+    <!-- REPLACE ca-pub-XXXXXXXXXXXXXXXXX WITH YOUR ACTUAL ADSENSE PUBLISHER ID -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+         data-ad-slot="LEADERBOARD_SLOT_ID"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
 
-            <div class="buttons-container">
-                <button class="spin-button" id="spinButton">Spin!</button>
-                <a href="#" class="find-button" id="findButton" target="_blank">Find Near Me</a>
-            </div>
+  <!-- =====================================================
+       MAIN CONTENT
+       ===================================================== -->
+  <main id="main-content" class="main-content">
+
+    <div class="content-grid">
+
+      <!-- ——————————————————————————
+           SPINNER CARD
+           —————————————————————————— -->
+      <section class="card slot-machine-container" aria-label="Lunch wheel spinner">
+        <h2 class="box-heading">Spin for Lunch!</h2>
+
+        <!-- Share button -->
+        <button class="share-button" id="shareButton" aria-label="Share Lunch Cupid">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+          </svg>
+          Share This
+        </button>
+
+        <!-- Reel window -->
+        <div class="reels" id="reels" role="img" aria-label="Spinning lunch options" aria-live="polite">
+          <div class="selection-indicator" aria-hidden="true">
+            <div class="arrow arrow-left"></div>
+            <div class="arrow arrow-right"></div>
+          </div>
+          <div class="reel-strip" id="reel-strip">
+            <div class="reel-cell" style="margin-top:120px;font-size:1.3em;color:#111827;">Ready?</div>
+          </div>
         </div>
-        
-        <!-- Right Column: Email Signup + Amazon Box -->
-        <div class="right-column">
-            <!-- Email Signup Container -->
-            <div class="email-signup-container">
-                <h2 class="box-heading">Lunch Cupid Delivered <br>(coming soon)</h2>
-                <p>Sign up with email - Lunch Cupid will shoot a <b>lunch recommendation to your inbox every day at 10:45am.</b>
-                    <br>
-                    <span class="text-small">Zip used to determine time zone.</span>
-                </p> 
-                
-                <div id="form-content">
-                    <form action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe" method="POST" id="email-form" class="email-form">
-                        <div>
-                            <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="fields[email]" id="email" class="form-input" placeholder="Enter your email" required>
-                        </div>
-                        <div>
-                            <label for="zip" class="sr-only">Zip Code</label>
-                            <input type="text" name="fields[zip_code]" id="zip" class="form-input" placeholder="Enter your zip code" required> 
-                            <!-- NOTE: 'name' might be different, like "fields[zipcode]" -->
-                        </div>
-                        <button type="submit" class="submit-button">Subscribe</button>
-                    </form>
-                </div>
 
-            <!-- This success message is hidden by default -->
-                <div id="success-message" class="success-message">
-                    Thanks for subscribing!
-                </div>
-            </div>
+        <!-- Buttons -->
+        <div class="buttons-container">
+          <button class="spin-button" id="spinButton" aria-label="Spin the lunch wheel">Spin!</button>
+          <a  class="find-button"
+              id="findButton"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Find this food near me on Google Maps">
+            Find Near Me
+          </a>
 
-            <!-- Amazon Affiliates Container -->
-            <div class="amazon-container">
-                <h2 class="box-heading">Support Lunch Cupid</h2>
-                <p>Shopping on Amazon? Use our link and help keep Lunch Cupid running at no extra cost to you!</p>
-                <a href="https://amzn.to/4adTm2n" target="_blank" rel="noopener noreferrer" class="amazon-button" id="amazonButton">Shop on Amazon</a>
-            </div>
+          <!-- Surprise Me auto-spin toggle -->
+          <div class="surprise-me-wrapper">
+            <input
+              type="checkbox"
+              class="surprise-toggle"
+              id="surpriseToggle"
+              role="switch"
+              aria-checked="false"
+              aria-label="Surprise Me — auto-spin every 10 seconds"
+            >
+            <label class="surprise-label" for="surpriseToggle">Surprise Me (auto-spin)</label>
+          </div>
+
+          <p class="keyboard-hint">Press <kbd>Space</kbd> to spin</p>
         </div>
-            
 
-    </div> <!-- End of Main Content Section -->
-
-
-    <!-- 5. Footer Section -->
-    <footer class="footer">
-        <p>© 2025 Lunch Cupid</p>
-        <div class="mt-2">
-            <a href="/privacy.html" class="hover:text-indigo-700">Privacy Policy</a>
-            <span class="mx-2">&bull;</span>
-            <a href="mailto:contact@lunchcupid.com" class="hover:text-indigo-700">Send Feedback</a>
+        <!-- Spin History -->
+        <div class="spin-history" aria-label="Recent spin results">
+          <h3>Recent picks</h3>
+          <ol id="historyList" aria-live="polite" aria-relevant="additions"></ol>
         </div>
-    </footer>
-    
-    <!-- 4. JavaScript for Spinner (MOVED TO BOTTOM) -->
-    <script>
-        // --- 1. DEFINE ALL YOUR VARIABLES ---
-        const lunchOptions = [
-            { display: "Pizza Slice", search: "Pizza" },
-            { display: "Cheeseburger", search: "Cheeseburger" },
-            { display: "Fried Chicken Sandwich", search: "Chicken Sandwich" },
-            { display: "Hot Dogs", search: "Hot Dogs" },
-            { display: "Chicken Wings", search: "Chicken Wings" },
-            { display: "Chicken Tenders & Fries", search: "Chicken Tenders" },
-            { display: "Philly Cheesesteak", search: "Philly Cheesesteak" },
-            { display: "BBQ Pulled Pork Sandwich", search: "Pulled Pork Sandwich" },
-            { display: "Meatball Sub", search: "Meatball Sub" },
-            { display: "Sloppy Joe", search: "Sloppy Joe" },
-            { display: "Avocado Toast with Fried Egg", search: "Avocado Toast" },
-            { display: "Burrito Bowl", search: "Burrito Bowl" },
-            { display: "Poke Bowl", search: "Poke Bowl" },
-            { display: "Teriyaki Chicken Bowl", search: "Teriyaki Chicken Bowl" },
-            { display: "Korean Bibimbab Bowl", search: "Korean Beef Bowl" },
-            { display: "Grain Bowl (Quinoa/Farro, etc.)", search: "Grain Bowl" },
-            { display: "Mediterranean Bowl", search: "Mediterranean Bowl" },
-            { display: "Chili (Beef or Vegetarian)", search: "Chili con Carne" },
-            { display: "Macaroni & Cheese", search: "Macaroni & Cheese" },
-            { display: "Chicken & Rice Casserole", search: "Chicken Rice Casserole" },
-            { display: "Chipotle", search: "Chipotle" },
-            { display: "Cava", search: "Cava" },
-            { display: "Korean Hangover Soup", search: "Korean Hangover Soup" },
-            { display: "Soba Noodles", search: "Soba Noodles" },
-            { display: "Udon Noodles", search: "Udon Noodles" },
-            { display: "Bibimbap", search: "Bibimbap" },
-            { display: "Bulgogi", search: "Bulgogi" },
-            { display: "Tonkotsu Ramen", search: "Tonkotsu Ramen" },
-            { display: "Miso Ramen", search: "Miso Ramen" },
-            { display: "Chinese Takeout", search: "Chinese Takeout" },
-            { display: "Sushi Set (Nigiri)", search: "Sushi" },
-            { display: "California Roll (Sushi)", search: "California Roll" },
-            { display: "Spicy Tuna Roll (Sushi)", search: "Spicy Tuna Roll" },
-            { display: "Volcano Roll (Sushi)", search: "Volcano Roll" },
-            { display: "Tuna Roll (Sushi)", search: "Tuna Roll" },
-            { display: "Donkatsu", search: "Donkatsu" },
-            { display: "Chicken Katsu", search: "Chicken Katsu" },
-            { display: "Beef Fried Rice", search: "Beef Fried Rice" },
-            { display: "Shrimp Fried Rice", search: "Shrimp Fried Rice" },
-            { display: "Fried Rice", search: "Fried Rice" },
-            { display: "Lo Mein Noodles", search: "Lo Mein" },
-            { display: "Murgh (Chicken) Makhani", search: "Murgh Makhani" },
-            { display: "Chicken Tikka Masala", search: "Chicken Tikka Masala" },
-            { display: "Chana Masala (Chickpea Curry)", search: "Chana Masala" },
-            { display: "Saag Paneer", search: "Saag Paneer" },
-            { display: "Arepas", search: "Arepas" },
-            { display: "Ceviche", search: "Ceviche" },
-            { display: "Pollo a la Brasa (Peruvian Chicken)", search: "Peruvian Chicken" },
-            { display: "Tacos (Carne Asada, Al Pastor, or Fish)", search: "Tacos" },
-            { display: "Quesadilla", search: "Quesadilla" },
-            { display: "Burrito", search: "Burrito" },
-            { display: "Loaded Nachos", search: "Loaded Nachos" },
-            { display: "Empanadas", search: "Empanadas" },
-            { display: "Gyro", search: "Gyro" },
-            { display: "Chicken Shawarma Plate", search: "Chicken Shawarma" },
-            { display: "Falafel Platter (with hummus and pita)", search: "Falafel" },
-            { display: "Biryani (Chicken or Vegetable)", search: "Biryani" },
-            { display: "Kofta Kebab", search: "Kofta Kebab" },
-            { display: "Hummus with Pita & Veggies", search: "Hummus" },
-            { display: "Chicken Parm Sandwich", search: "Chicken Parm Sandwich" },
-            { display: "Chicken Parm", search: "Chicken Parm" },
-            { display: "Linguine Alfredo", search: "Linguine Alfredo" },
-            { display: "Vodka Sauce Rigatoni", search: "Vodka Sauce Rigatoni" },
-            { display: "Tagliatelle Bolognese", search: "Tagliatelle Bolognese" },
-            { display: "Greek Salad", search: "Greek Salad" },
-            { display: "Cobb Salad", search: "Cobb Salad" },
-            { display: "Caesar Salad with Grilled Chicken", search: "Caesar Salad" },
-            { display: "Spinach Salad with Almonds and Goat Cheese", search: "Spinach Salad" },
-            { display: "Quinoa Salad (Black Beans, Corn, Avocado)", search: "Quinoa Salad" },
-            { display: "Asian Chicken Salad", search: "Asian Chicken Salad" },
-            { display: "Tuna Niçoise Salad", search: "Tuna Niçoise Salad" },
-            { display: "Caprese Salad", search: "Caprese Salad" },
-            { display: "Beet and Goat Cheese Salad", search: "Beet and Goat Cheese Salad" },
-            { display: "Garden Salad with Chickpeas", search: "Garden Salad with Chickpeas" },
-            { display: "Sweetgreen", search: "Sweetgreen" },
-            { display: "Turkey Club", search: "Turkey Club" },
-            { display: "BLT Sandwich", search: "BLT Sandwich" },
-            { display: "Chicken Caesar Wrap", search: "Chicken Caesar Wrap" },
-            { display: "Tuna Salad Sandwich", search: "Tuna Salad Sandwich" },
-            { display: "Roast Beef & Swiss Sandwich", search: "Roast Beef & Swiss" },
-            { display: "Ham & Cheese Sandwich", search: "Ham & Cheese" },
-            { display: "Egg Salad Sandwich", search: "Egg Salad Sandwich" },
-            { display: "Italian Sub", search: "Italian Sub" },
-            { display: "Grilled Cheese Sandwich", search: "Grilled Cheese" },
-            { display: "Buffalo Chicken Wrap", search: "Buffalo Chicken Wrap" },
-            { display: "Subway", search: "Subway" },
-            { display: "Caprese Panini", search: "Caprese Panini" },
-            { display: "French Dip Sandwich", search: "French Dip" },
-            { display: "Reuben Sandwich", search: "Reuben" },
-            { display: "Prosciutto & Fig Panini", search: "Prosciutto & Fig Panini" },
-            { display: "Smoked Salmon Bagel", search: "Smoked Salmon Bagel" },
-            { display: "Banh Mi (Vietnamese Sandwich)", search: "Banh Mi" },
-            { display: "Chicken & Pesto Panini", search: "Chicken & Pesto Panini" },
-            { display: "Spicy Tuna Melt", search: "Spicy Tuna Melt" },
-            { display: "Falafel Wrap", search: "Falafel Wrap" },
-            { display: "California Club Sandwich", search: "California Club Sandwich" },
-            { display: "McDonald's", search: "McDonald's" },
-            { display: "Chick-fil-a", search: "Chick-fil-a" },
-            { display: "Cuban Sandwich", search: "Cuban Sandwich" },
-            { display: "Sandwich & Soup Combo", search: "Sandwich & Soup Combo" },
-            { display: "Pad Thai", search: "Pad Thai" },
-            { display: "Pho (Vietnamese Noodle Soup)", search: "Pho" }
-        ];
+      </section>
 
-        // --- NEW SPINNER VARIABLES ---
-        const reelStrip = document.getElementById('reel-strip');
-        const spinButton = document.getElementById('spinButton');
-        const findButton = document.getElementById('findButton');
-        const shareButton = document.getElementById('shareButton');
-        const amazonButton = document.getElementById('amazonButton');
-        
-        // Form elements
-        const emailForm = document.getElementById('email-form');
-        const formContent = document.getElementById('form-content');
-        const successMessage = document.getElementById('success-message');
+      <!-- ——————————————————————————
+           RIGHT COLUMN
+           —————————————————————————— -->
+      <div class="right-column">
 
-        // Spinner state
-        let currentChoice = null;
-        // --- END NEW SPINNER VARIABLES ---
-        
+        <!-- Email signup -->
+        <section class="card email-signup-container" aria-label="Email subscription">
+          <h2 class="box-heading">Lunch Cupid Delivered<br><small style="font-size:0.72em;font-weight:500;color:#9ca3af;">(coming soon)</small></h2>
+          <p class="card-desc">
+            Sign up and Lunch Cupid will shoot a <strong>lunch recommendation to your inbox every day at 10:45 am.</strong>
+            <br>
+            <span class="text-small">Zip code used to determine your time zone.</span>
+          </p>
 
-        // --- 2. DEFINE ALL YOUR FUNCTIONS ---
-        
-        function getRandomLunchOption() {
-            const randomIndex = Math.floor(Math.random() * lunchOptions.length);
-            return lunchOptions[randomIndex];
-        }
+          <div id="form-content">
+            <!--
+              Cloudflare Worker endpoint — update after deployment:
+              https://lunchcupid-email.REPLACE-WITH-YOUR-SUBDOMAIN.workers.dev/subscribe
+            -->
+            <form
+              id="email-form"
+              class="email-form"
+              action="https://lunchcupid-email.REPLACE-WITH-YOUR-SUBDOMAIN.workers.dev/subscribe"
+              method="POST"
+            >
+              <!--
+                MailerLite fallback (commented out):
+                action="https://assets.mailerlite.com/jsonp/1883666/forms/169902771783337634/subscribe"
+              -->
+              <div>
+                <label for="email" class="sr-only">Email address</label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  class="form-input"
+                  placeholder="Enter your email"
+                  autocomplete="email"
+                  required
+                >
+              </div>
+              <div>
+                <label for="zip" class="sr-only">Zip code</label>
+                <input
+                  type="text"
+                  name="zip_code"
+                  id="zip"
+                  class="form-input"
+                  placeholder="Enter your zip code"
+                  inputmode="numeric"
+                  pattern="[0-9]{5}"
+                  maxlength="5"
+                  required
+                >
+              </div>
+              <button type="submit" class="submit-button">Subscribe</button>
+            </form>
+          </div>
 
-        // --- NEW STARTSPINNING FUNCTION ---
-        function startSpinning() {
-            // Track spin events
-            gtag('event', 'spin_button_click', { 'event_category': 'Spinner' });
-            
-            spinButton.disabled = true;
-            findButton.classList.remove('visible');
-            reelStrip.innerHTML = ''; // Clear the "Ready?" text
+          <div id="success-message" class="success-message" role="status">
+            🎉 Thanks for subscribing! We'll be in touch soon.
+          </div>
+        </section>
 
-            const itemHeight = 40; // Height of one .reel-cell (must match CSS)
-            const spinCount = 60; // Total items in the strip (more items = looks faster)
-            let stripContent = '';
+        <!-- Amazon affiliate -->
+        <section class="card amazon-container" aria-label="Support Lunch Cupid via Amazon">
+          <h2 class="box-heading">Support Lunch Cupid</h2>
+          <p class="card-desc">
+            Shopping on Amazon? Use our link and help keep Lunch Cupid running at <strong>no extra cost</strong> to you!
+          </p>
+          <a
+            href="https://amzn.to/4adTm2n"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            class="amazon-button"
+            id="amazonButton"
+            aria-label="Shop on Amazon and support Lunch Cupid"
+          >
+            🛒 Shop on Amazon
+          </a>
+        </section>
 
-            // Get the final choice *first*
-            currentChoice = getRandomLunchOption();
+        <!-- ——————————————————————————
+             AD SLOT — RECTANGLE (300×250)
+             REPLACE ca-pub-XXXXXXXXXXXXXXXXX WITH YOUR ACTUAL ADSENSE PUBLISHER ID
+             —————————————————————————— -->
+        <div class="ad-rectangle" aria-label="Advertisement" role="complementary">
+          <!-- REPLACE ca-pub-XXXXXXXXXXXXXXXXX WITH YOUR ACTUAL ADSENSE PUBLISHER ID -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:300px;height:250px"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+               data-ad-slot="RECTANGLE_SLOT_ID"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
 
-            // Create the reel strip HTML
-            for (let i = 0; i < spinCount; i++) {
-                let item;
-                // Place the winner at position 48 (index 48, which is spinCount - 2)
-                if (i === spinCount - 5) {
-                    item = currentChoice;
-                } else {
-                    item = getRandomLunchOption(); // Fill with random items
-                }
-                // Add pastel color to random items, make winner dark
-                const color = (i === spinCount - 5) ? '#111827' : '#374151';
-                stripContent += `<div class="reel-cell" style="color: ${color};">${item.display}</div>`;
-            }
-            reelStrip.innerHTML = stripContent;
+      </div><!-- end .right-column -->
 
-            // --- The Animation ---
-            
-            // 1. Instantly move strip to the top (no transition)
-            reelStrip.style.transition = 'none';
-            reelStrip.style.transform = 'translateY(0)';
+    </div><!-- end .content-grid -->
 
-            // 2. Force browser to render this position (this is a small hack)
-            void reelStrip.offsetWidth; 
+    <!-- ——————————————————————————
+         HOW IT WORKS
+         —————————————————————————— -->
+    <section class="how-it-works" aria-label="How Lunch Cupid works">
+      <h2>How It Works</h2>
+      <div class="how-steps">
+        <article class="how-step">
+          <div class="how-step-emoji" aria-hidden="true">🎡</div>
+          <h3>Spin the Wheel</h3>
+          <p>Hit <strong>Spin!</strong> (or press <kbd>Space</kbd>) and watch Lunch Cupid shuffle through hundreds of delicious options.</p>
+        </article>
+        <article class="how-step">
+          <div class="how-step-emoji" aria-hidden="true">🗺️</div>
+          <h3>Find It Near You</h3>
+          <p>Click <strong>Find Near Me</strong> and we'll open Google Maps loaded with places serving your result — zero effort required.</p>
+        </article>
+        <article class="how-step">
+          <div class="how-step-emoji" aria-hidden="true">😋</div>
+          <h3>Enjoy Your Lunch</h3>
+          <p>Go eat! And if you're not feeling it, just spin again. No commitment, no regrets.</p>
+        </article>
+      </div>
+    </section>
 
-            // 3. Set final position and add the "slow-down" transition
-            // 5s duration (CHANGED FROM 6s)
-            reelStrip.style.transition = 'transform 3.5s cubic-bezier(0.23, 1, 0.32, 1)';
-            
-            // We want to land on the item at index 48 (spinCount - 2).
-            // The "middle" slot is 1 * itemHeight (40px) from the top of the window.
-            // So, we move the strip up by (48 * 40px)
-            // Then we subtract 40px to center it in the middle slot.
-            const finalPosition = (spinCount - 5) * itemHeight - (3 * itemHeight);
-            reelStrip.style.transform = `translateY(-${finalPosition}px)`;
+  </main><!-- end #main-content -->
 
-            // 4. Set timeout to re-enable buttons *after* animation
-            setTimeout(stopSpinning, 3500); // 3500ms = 3.5s
-        }
-        // --- END NEW STARTSPINNING FUNCTION ---
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+  <footer class="site-footer" role="contentinfo">
+    <p>© 2026 Lunch Cupid</p>
+    <nav aria-label="Footer navigation">
+      <a href="/privacy.html">Privacy Policy</a>
+      <span aria-hidden="true">&bull;</span>
+      <a href="mailto:contact@lunchcupid.com">Send Feedback</a>
+    </nav>
+  </footer>
 
-        // --- NEW STOPSPINNING FUNCTION ---
-        function stopSpinning() {
-            // Animation is done. 'currentChoice' is already set.
-            const mapsQuery = encodeURIComponent(`${currentChoice.search} near me`);
-            // FIXED: Removed the space in 'https://'
-            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+  <!-- =====================================================
+       APP SCRIPT
+       ===================================================== -->
+  <script src="js/app.js"></script>
 
-            findButton.textContent = `Find ${currentChoice.search} Near Me`;
-            findButton.href = mapsUrl;
-
-            // Show the button
-            findButton.classList.add('visible');
-            spinButton.disabled = false;
-        }
-        // --- END NEW STOPSPINNING FUNCTION ---
-
-        // --- 3. ATTACH ALL EVENT LISTENERS ---
-
-        spinButton.addEventListener('click', startSpinning);
-
-        // Track clicks on the "Find Near Me" button
-        findButton.addEventListener('click', () => {
-            if (currentChoice) {
-                gtag('event', 'find_near_me_click', {
-                    'event_category': 'Engagement',
-                    'event_label': currentChoice.search // This sends the food item!
-                });
-            }
-        });
-
-        
-                // Track clicks on the Amazon button
-        amazonButton.addEventListener('click', () => {
-            gtag('event', 'amazon_affiliate_click', {
-                'event_category': 'Affiliate',
-                'event_label': 'Amazon'
-            });
-        });
-        
-        
-        // Email Form Submission
-        emailForm.addEventListener('submit', function(event) {
-            // 1. Prevent the form from opening a new tab
-            event.preventDefault();
-
-            // Track email signups
-            gtag('event', 'email_subscribe_attempt', { 'event_category': 'Conversion' });
-    
-            // 2. Get the form data
-            const formData = new FormData(emailForm);
-    
-            // 3. Send the data in the background
-            fetch(emailForm.action, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors' 
-            })
-            .catch(error => console.error('Error:', error));
-    
-            // 4. Assume success: Hide the form and show the success message
-            formContent.classList.add('hidden');
-            successMessage.style.display = 'block';
-        });
-
-        // Share Button
-        shareButton.addEventListener('click', async () => {
-            const shareData = {
-                title: 'Lunch Cupid',
-                text: "Here's a fun little app for deciding what to eat for lunch!",
-                url: 'https://lunchcupid.com'
-            };
-
-            //Track website shares
-            gtag('event', 'share_website_click', { 'event_category': 'Engagement' });
-            
-            if (navigator.share) {
-                // Use Web Share API (modern mobile browsers)
-                try {
-                    await navigator.share(shareData);
-                } catch (err) {
-                    console.error('Error sharing:', err);
-                }
-            } else {
-                // Fallback to "Copy Link" for desktop
-                try {
-                    // Use the older execCommand
-                    const tempInput = document.createElement('input');
-                    tempInput.style.position = 'absolute';
-                    tempInput.style.left = '-9999px';
-                    tempInput.value = shareData.url;
-                    document.body.appendChild(tempInput);
-                    tempInput.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(tempInput);
-                    
-                    // Show a "Copied!" message
-                    const originalText = shareButton.innerHTML;
-                    shareButton.innerHTML = 'Link Copied!';
-                    setTimeout(() => {
-                        shareButton.innerHTML = originalText;
-                    }, 2000);
-
-                } catch (err) {
-                    // Failsafe
-                    alert('Could not copy link. Please manually copy: https://lunchcupid.com');
-                }
-            }
-        });
-
-        // Run on page load
-        document.addEventListener('DOMContentLoaded', () => {
-           findButton.classList.remove('visible');
-           // Just in case of bfcache
-           spinButton.disabled = false;
-        });
-    </script>
 </body>
 </html>
-

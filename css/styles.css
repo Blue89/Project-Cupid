@@ -1,0 +1,673 @@
+/* =============================================================
+   Lunch Cupid — styles.css
+   Color palette: rose / violet / sky
+   ============================================================= */
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f3f4f6;
+  color: #374151;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ---------- Typography ---------- */
+.font-pacifico { font-family: 'Pacifico', cursive; }
+
+h1, h2, h3 { line-height: 1.2; }
+
+/* ---------- Skip link (a11y) ---------- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: #f43f5e;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 8px 8px;
+  font-weight: 700;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
+
+/* ---------- Header / Hero ---------- */
+.site-header {
+  position: relative;
+  width: 100%;
+  height: 16rem; /* 256px */
+  background-color: #111;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .site-header { height: 20rem; } }
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.hero-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.hero-title {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(3rem, 10vw, 5rem);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  letter-spacing: 0.02em;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-weight: 400;
+  opacity: 0.92;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+/* ---------- Ad Slot — Leaderboard (above main content) ---------- */
+/* REPLACE ca-pub-XXXXXXXXXXXXXXXXX WITH YOUR ACTUAL ADSENSE PUBLISHER ID */
+.ad-leaderboard {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  min-height: 100px;
+}
+
+/* ---------- Main Content ---------- */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 1rem;
+}
+
+.content-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+@media (min-width: 768px) {
+  .content-grid {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+  }
+}
+
+/* ---------- Card base ---------- */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06);
+  padding: 1.75rem;
+  width: 100%;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.box-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+/* ---------- Slot Machine / Spinner ---------- */
+.slot-machine-container {
+  max-width: 560px;
+  text-align: center;
+}
+
+.reels {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+  height: 280px;
+  align-items: center;
+  border: 2px solid #fecdd3;
+  background: linear-gradient(135deg, #fdf2f8 0%, #f0f9ff 100%);
+  border-radius: 12px;
+}
+
+.reels::before,
+.reels::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 110px;
+  z-index: 2;
+  pointer-events: none;
+}
+.reels::before {
+  top: 0;
+  background: linear-gradient(to bottom, #fdf4ff 0%, transparent 100%);
+}
+.reels::after {
+  bottom: 0;
+  background: linear-gradient(to top, #f0f9ff 0%, transparent 100%);
+}
+
+.selection-indicator {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  right: 8px;
+  height: 46px;
+  transform: translateY(-50%);
+  border: 2.5px solid #f43f5e;
+  border-radius: 10px;
+  z-index: 3;
+  pointer-events: none;
+  box-shadow: 0 0 16px rgba(244, 63, 94, 0.25), inset 0 0 8px rgba(244, 63, 94, 0.05);
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  animation: flash 0.9s ease-in-out infinite;
+}
+.arrow-left {
+  left: 10px;
+  border-left: 11px solid #f43f5e;
+}
+.arrow-right {
+  right: 10px;
+  border-right: 11px solid #f43f5e;
+}
+
+@keyframes flash {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.reel-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: transform 3.5s cubic-bezier(0.08, 1, 0.65, 1);
+  will-change: transform;
+}
+
+.reel-cell {
+  font-size: 1.15em;
+  font-weight: 700;
+  color: #374151;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  padding: 0 52px;
+  letter-spacing: 0.01em;
+}
+
+/* Spinner loading state */
+.reels.is-spinning .reel-strip {
+  filter: blur(1px);
+}
+
+/* ---------- Buttons ---------- */
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.spin-button,
+.find-button,
+.submit-button,
+.amazon-button {
+  display: inline-block;
+  width: 80%;
+  max-width: 260px;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.spin-button {
+  background: linear-gradient(135deg, #fb7185 0%, #f43f5e 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.35);
+}
+.spin-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(244, 63, 94, 0.45);
+}
+.spin-button:focus-visible {
+  outline: 3px solid #f43f5e;
+  outline-offset: 3px;
+}
+.spin-button:disabled {
+  background: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.find-button {
+  background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s ease, visibility 0.35s ease, background 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+}
+.find-button.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.find-button:hover {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.45);
+}
+.find-button:focus-visible {
+  outline: 3px solid #8b5cf6;
+  outline-offset: 3px;
+}
+
+.surprise-me-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+.surprise-toggle {
+  appearance: none;
+  width: 40px;
+  height: 22px;
+  background: #d1d5db;
+  border-radius: 999px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+}
+.surprise-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: left 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.surprise-toggle:checked {
+  background: #f43f5e;
+}
+.surprise-toggle:checked::after {
+  left: 20px;
+}
+.surprise-toggle:focus-visible {
+  outline: 3px solid #f43f5e;
+  outline-offset: 2px;
+}
+.surprise-label {
+  font-size: 0.88rem;
+  color: #6b7280;
+  user-select: none;
+  cursor: pointer;
+}
+
+/* ---------- Share Button ---------- */
+.share-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1.5px solid #bae6fd;
+  color: #0ea5e9;
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 1rem;
+}
+.share-button:hover {
+  background: #f0f9ff;
+  border-color: #38bdf8;
+  color: #0284c7;
+  transform: translateY(-1px);
+}
+.share-button:focus-visible {
+  outline: 3px solid #0ea5e9;
+  outline-offset: 2px;
+}
+.share-button svg { flex-shrink: 0; }
+
+/* ---------- Spin History ---------- */
+.spin-history {
+  margin-top: 1.25rem;
+  text-align: left;
+  border-top: 1px solid #f3f4f6;
+  padding-top: 1rem;
+}
+.spin-history h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+.spin-history ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.spin-history li {
+  font-size: 0.88rem;
+  color: #6b7280;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.spin-history li:first-child {
+  color: #f43f5e;
+  font-weight: 600;
+}
+.spin-history li:hover { background: #f9fafb; }
+
+/* ---------- Right Column ---------- */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 400px;
+  width: 100%;
+}
+
+/* ---------- Email Signup ---------- */
+.email-signup-container {
+  text-align: center;
+}
+.email-signup-container .card-desc {
+  color: #6b7280;
+  font-size: 0.93rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+.email-signup-container .text-small {
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+.email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: #fafafa;
+}
+.form-input:focus {
+  border-color: #8b5cf6;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+  background: #fff;
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+  color: #fff;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+.submit-button:hover {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+}
+.submit-button:focus-visible {
+  outline: 3px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+.success-message {
+  color: #059669;
+  font-weight: 600;
+  padding: 1.25rem;
+  border: 1.5px solid #a7f3d0;
+  border-radius: 10px;
+  background: #f0fdfa;
+  display: none;
+  font-size: 0.95rem;
+}
+.form-content.hidden { display: none; }
+
+/* ---------- Amazon Box ---------- */
+.amazon-container { text-align: center; }
+.amazon-container .card-desc {
+  color: #6b7280;
+  font-size: 0.93rem;
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+.amazon-button {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #fff;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+.amazon-button:hover {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+  color: #fff;
+}
+.amazon-button:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* ---------- Ad Slot — Rectangle (below Amazon) ---------- */
+/* REPLACE ca-pub-XXXXXXXXXXXXXXXXX WITH YOUR ACTUAL ADSENSE PUBLISHER ID */
+.ad-rectangle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 260px;
+}
+
+/* ---------- How It Works Section ---------- */
+.how-it-works {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 1rem 2rem;
+}
+.how-it-works h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+.how-steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+@media (min-width: 640px) {
+  .how-steps { grid-template-columns: repeat(3, 1fr); }
+}
+.how-step {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.how-step:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.how-step-emoji {
+  font-size: 2.25rem;
+  margin-bottom: 0.75rem;
+}
+.how-step h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.4rem;
+}
+.how-step p {
+  font-size: 0.88rem;
+  color: #6b7280;
+  line-height: 1.55;
+}
+
+/* ---------- Keyboard shortcut hint ---------- */
+.keyboard-hint {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin-top: 0.25rem;
+}
+kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #f9fafb;
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #6b7280;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: #e5e7eb;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: auto;
+}
+.site-footer p { margin-bottom: 0.5rem; }
+.site-footer a {
+  color: #6d28d9;
+  text-decoration: underline;
+  margin: 0 0.5rem;
+  transition: color 0.15s;
+}
+.site-footer a:hover { color: #4c1d95; }
+
+/* ---------- Utility ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up {
+  animation: fadeInUp 0.5s ease both;
+}
+
+/* Staggered card animations */
+.slot-machine-container { animation: fadeInUp 0.45s ease 0.1s both; }
+.email-signup-container  { animation: fadeInUp 0.45s ease 0.2s both; }
+.amazon-container        { animation: fadeInUp 0.45s ease 0.3s both; }
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 480px) {
+  .spin-button,
+  .find-button { width: 100%; max-width: 100%; }
+  .share-button { font-size: 0.78rem; }
+  .hero-title { font-size: 2.8rem; }
+}
