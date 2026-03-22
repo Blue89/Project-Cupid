@@ -112,6 +112,11 @@ h1, h2, h3 { line-height: 1.2; }
   align-items: center;
   gap: 2rem;
   padding: 3rem 1rem;
+  background-color: #fff;
+  /* Repeating pastel-pink hearts pattern (Telegram-style) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M20 30 L12.6 22.2 C10.2 19.6 10.2 15.6 12.6 13 C15 10.4 19 10.4 20 13.2 C21 10.4 25 10.4 27.4 13 C29.8 15.6 29.8 19.6 27.4 22.2 Z' fill='%23fcc5d0' opacity='0.35'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 48px 48px;
 }
 
 .content-grid {
